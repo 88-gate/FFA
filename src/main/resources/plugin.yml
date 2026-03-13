@@ -1,0 +1,17 @@
+name: FFA
+version: '1.0.6'
+main: me.kaitp1016.ffa.FFA
+api-version: '1.21'
+authors: [ kaitp1016 ]
+description: ''
+website: https://discord.gg/monekun
+
+commands:
+  ffa:
+    description: Your description
+    usage: /<command>
+    permission: ffa.commands.ffa
+
+permissions:
+  ffa.commands.ffa:
+    default: op

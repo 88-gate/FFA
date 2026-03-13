@@ -1,0 +1,69 @@
+package me.kaitp1016.ffa.game
+
+import me.kaitp1016.ffa.events.impl.TickEvent
+import me.kaitp1016.ffa.setting.Settings
+import org.bukkit.damage.DamageSource
+import org.bukkit.damage.DamageType
+import org.bukkit.entity.Player
+import org.bukkit.event.EventHandler
+import org.bukkit.event.EventPriority
+import org.bukkit.event.Listener
+import org.bukkit.event.entity.EntityDamageEvent
+import org.bukkit.event.player.PlayerQuitEvent
+
+object CombatTag: Listener {
+    val combatTagStatus = mutableMapOf<Player, Long>()
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    fun onDamage(event: EntityDamageEvent) {
+        if (event.isCancelled || event.damage <= 0.0) return
+
+        val entity = event.entity as? Player ?: return
+        val damager = event.damageSource.causingEntity as? Player ?: return
+
+        combatTagStatus[damager] = System.currentTimeMillis()
+        combatTagStatus[entity] = System.currentTimeMillis()
+    }
+
+    @EventHandler
+    fun onLogout(event: PlayerQuitEvent) {
+        val player = event.player
+        if (player.hasCombatTag()) {
+            val damageSource = DamageSource.builder(DamageType.MAGIC).build()
+            player.damage(1000000.0,damageSource)
+        }
+    }
+
+    @EventHandler
+    fun onTick(event: TickEvent) {
+        val toRemove = mutableListOf<Player>()
+
+        val currentTime = System.currentTimeMillis()
+
+        combatTagStatus.forEach { (player, time) ->
+            if (time + Settings.COMBAT_TAG_TIME.getValue() < currentTime) {
+                toRemove.add(player)
+            }
+        }
+
+        toRemove.forEach {
+            combatTagStatus.remove(it)
+        }
+    }
+
+    fun Player.hasCombatTag(): Boolean {
+        val time = combatTagStatus[this] ?: return false
+
+        if (time + Settings.COMBAT_TAG_TIME.getValue() < System.currentTimeMillis()) {
+            combatTagStatus.remove(this)
+            return false
+        }
+        else return true
+    }
+
+    fun Player.getCombatTagTime(): Long {
+        val time = combatTagStatus[this] ?: return -1
+
+        return time + Settings.COMBAT_TAG_TIME.getValue() - System.currentTimeMillis()
+    }
+}
