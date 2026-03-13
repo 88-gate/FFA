@@ -2,6 +2,8 @@ package me.kaitp1016.ffa.game
 
 import me.kaitp1016.ffa.events.impl.TickEvent
 import me.kaitp1016.ffa.setting.Settings
+import me.kaitp1016.ffa.utils.DatapackAPI.addMoney
+import me.kaitp1016.ffa.utils.NMSUtils.asCraftPlayer
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.Bukkit
@@ -31,6 +33,10 @@ object Revenge: Listener {
 
             player.inventory.clear()
             event.drops.clear()
+
+            val reward = Settings.REVENGE_REWARD.getValue()
+            player.asCraftPlayer().handle.addMoney(reward)
+            player.sendMessage("§a復讐を成功して §e${reward}コイン §aを受け取りました!")
 
             val text = Component.text("").color(NamedTextColor.YELLOW).append(killer.name().append(Component.text(" は ").color(NamedTextColor.YELLOW).append(player.name()).append(Component.text(" に復讐を果たした!").color(NamedTextColor.YELLOW))))
             Bukkit.getOnlinePlayers().forEach {
