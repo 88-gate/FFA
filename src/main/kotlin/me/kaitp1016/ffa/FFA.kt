@@ -50,13 +50,13 @@ class FFA : JavaPlugin(), Listener {
         player.connection.send(
             ClientboundServerLinksPacket(
                 listOf(
-                    ServerLinks.UntrustedEntry(Either.left(ServerLinks.KnownLinkType.ANNOUNCEMENTS), "https://discord.gg/tFRPBv4duf"),
-                    ServerLinks.UntrustedEntry(Either.left(ServerLinks.KnownLinkType.FEEDBACK), "https://discord.gg/tFRPBv4duf"),
-                    ServerLinks.UntrustedEntry(Either.left(ServerLinks.KnownLinkType.COMMUNITY), "https://discord.gg/tFRPBv4duf"),
-                    ServerLinks.UntrustedEntry(Either.left(ServerLinks.KnownLinkType.STATUS), "https://discord.gg/tFRPBv4duf"),
-                    ServerLinks.UntrustedEntry(Either.left(ServerLinks.KnownLinkType.SUPPORT), "https://discord.gg/tFRPBv4duf"),
-                    ServerLinks.UntrustedEntry(Either.left(ServerLinks.KnownLinkType.WEBSITE), "https://discord.gg/tFRPBv4duf"),
-                    ServerLinks.UntrustedEntry(Either.left(ServerLinks.KnownLinkType.BUG_REPORT), "https://discord.gg/tFRPBv4duf"),
+                    ServerLinks.UntrustedEntry(Either.left(ServerLinks.KnownLinkType.ANNOUNCEMENTS), "https://discord.gg/2PGFuasqFM"),
+                    ServerLinks.UntrustedEntry(Either.left(ServerLinks.KnownLinkType.FEEDBACK), "https://discord.gg/2PGFuasqFM"),
+                    ServerLinks.UntrustedEntry(Either.left(ServerLinks.KnownLinkType.COMMUNITY), "https://discord.gg/2PGFuasqFM"),
+                    ServerLinks.UntrustedEntry(Either.left(ServerLinks.KnownLinkType.STATUS), "https://discord.gg/2PGFuasqFM"),
+                    ServerLinks.UntrustedEntry(Either.left(ServerLinks.KnownLinkType.SUPPORT), "https://discord.gg/2PGFuasqFM"),
+                    ServerLinks.UntrustedEntry(Either.left(ServerLinks.KnownLinkType.WEBSITE), "https://discord.gg/2PGFuasqFM"),
+                    ServerLinks.UntrustedEntry(Either.left(ServerLinks.KnownLinkType.BUG_REPORT), "https://discord.gg/2PGFuasqFM"),
                 )
             )
         )
