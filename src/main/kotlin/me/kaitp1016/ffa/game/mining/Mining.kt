@@ -49,7 +49,7 @@ object Mining: Listener {
     val minedPos = mutableListOf<MinedPos>()
 
     val MINING_WORLD = Bukkit.getWorld("world")!!
-    val MINING_AREA = AABB(1000000.0,1000000.0,1000000.0,1000000.0,1000000.0,1000000.0,) //AABB(38.0, 99.0, 56.0, 2.0, 112.0, 0.0)
+    val MINING_AREA = AABB(38.0, 99.0, 56.0, 2.0, 112.0, 0.0) //  AABB(1000000.0,1000000.0,1000000.0,1000000.0,1000000.0,1000000.0,) //
 
     @EventHandler(priority = EventPriority.LOWEST)
     fun onMine(event: BlockBreakEvent) {
@@ -57,10 +57,10 @@ object Mining: Listener {
         val pos = BlockPos(block.x, block.y, block.z)
         if (block.world != MINING_WORLD || !MINING_AREA.contains(pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble())) return
 
-        event.isCancelled = true
-
         val player = event.player
         val data = datas[block.type] ?: return
+
+        event.isCancelled = true
         val reward = data.money.random()
 
         player.asCraftPlayer().handle.addMoney(reward)

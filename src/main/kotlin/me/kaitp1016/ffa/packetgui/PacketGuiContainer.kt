@@ -23,6 +23,11 @@ class PacketGuiContainer: AbstractContainerMenu {
         return ItemStack.EMPTY
     }
 
+    override fun removed(player: Player) {
+        packetGui.onClose()
+        super.removed(player)
+    }
+
     override fun stillValid(player: Player): Boolean {
         return packetGui.isOpened
     }

@@ -1,11 +1,13 @@
 package me.kaitp1016.ffa.commands
 
+import me.kaitp1016.ffa.game.mining.MiningChest
 import me.kaitp1016.ffa.items.ItemManager
 import me.kaitp1016.ffa.packetgui.impl.ItemListGui
 import me.kaitp1016.ffa.packetgui.impl.TestSignGui
 import me.kaitp1016.ffa.packetgui.impl.setting.SettingGui
 import me.kaitp1016.ffa.utils.NMSUtils.asCraftPlayer
 import me.kaitp1016.ffa.utils.Utils
+import net.minecraft.core.BlockPos
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -43,6 +45,10 @@ object FFACommand : CommandExecutor, TabCompleter {
             TestSignGui(sender.asCraftPlayer().handle).open()
         }
 
+        if (args[0] == "minecontainertest") {
+            MiningChest(BlockPos.ZERO).openContainer(sender.asCraftPlayer().handle)
+        }
+
         if (args[0] == "setting") {
             SettingGui(sender.asCraftPlayer().handle,null).open()
         }
@@ -62,6 +68,7 @@ object FFACommand : CommandExecutor, TabCompleter {
             suggestions.add("test")
             suggestions.add("items")
             suggestions.add("setting")
+            suggestions.add("minecontainertest")
         }
         else if (args.getOrNull(0) == "give" && args.size == 2) {
             suggestions.addAll(ItemManager.itemIdMap.keys)
