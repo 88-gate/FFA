@@ -3,7 +3,7 @@ package me.kaitp1016.ffa.items.events
 import me.kaitp1016.ffa.items.CustomItem
 import java.lang.reflect.Method
 
-object ItemEventManager {
+object  ItemEventManager {
     val listeners: MutableMap<Class<out ItemEvent>, MutableList<Listener>> = mutableMapOf()
 
     data class Listener(val item: CustomItem, val itemId: Int, val method: Method)
