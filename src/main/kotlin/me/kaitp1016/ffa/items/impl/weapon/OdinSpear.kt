@@ -49,12 +49,13 @@ object OdinSpear: CustomItem() {
     override val material = Material.TRIDENT
     override val rarity = Rarity.LEGENDARY
     override val category = ItemCategory.WEAPON
-    override val description = "投げられたトライデントは\n当たった地点に爆発が起こり、\n使用者の手元に戻ってくる。\nクールダウンは40秒。"
+    override val description = "投げられたトライデントは\n当たった地点に爆発が起こり、\n使用者の手元に戻ってくる。\nクールダウンは30秒。"
     override val history = "最高神オーディンが使っていたと\nされている槍。ドワーフの職人に\nよって作られた聖なる槍であり、\n当たった位置に爆発が起こり\n持ち主の手元に戻ってくる。"
     override val isUnique = true
     override val isEnchantable = false
 
-    const val COOLDOWN = 40f
+    const val DAMAGE_MULTIPLIER = 0.2f
+    const val COOLDOWN = 30f
 
     val cooldownLocation = Identifier.parse("ffa:odin_spear_cooldown")
 
@@ -192,7 +193,7 @@ object OdinSpear: CustomItem() {
                 }
 
                 override fun getEntityDamageAmount(explosion: Explosion, entity: Entity, seenPercent: Float): Float {
-                    return super.getEntityDamageAmount(explosion, entity, seenPercent) * 0.65f
+                    return super.getEntityDamageAmount(explosion, entity, seenPercent) * DAMAGE_MULTIPLIER
                 }
             }
         }
