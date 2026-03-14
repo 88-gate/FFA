@@ -1,6 +1,7 @@
 package me.kaitp1016.ffa.game
 
 import me.kaitp1016.ffa.events.impl.TickEvent
+import me.kaitp1016.ffa.events.impl.UpdateActionBarEvent
 import me.kaitp1016.ffa.setting.Settings
 import org.bukkit.damage.DamageSource
 import org.bukkit.damage.DamageType
@@ -50,6 +51,16 @@ object CombatTag: Listener {
             combatTagStatus.remove(it)
         }
     }
+
+    @EventHandler
+    fun onActionBar(event: UpdateActionBarEvent) {
+        val player = event.player
+        val time = player.getCombatTagTime()
+        if (time == -1L) return
+
+        event.addText("§aCombat Tag§7: §b${time / 1000}§a秒")
+    }
+
 
     fun Player.hasCombatTag(): Boolean {
         val time = combatTagStatus[this] ?: return false

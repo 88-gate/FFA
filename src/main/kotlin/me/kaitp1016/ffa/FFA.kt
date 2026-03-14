@@ -4,6 +4,7 @@ import com.google.gson.GsonBuilder
 import com.mojang.datafixers.util.Either
 import me.kaitp1016.ffa.commands.FFACommand
 import me.kaitp1016.ffa.events.EventManager
+import me.kaitp1016.ffa.events.impl.UpdateActionBarEvent
 import me.kaitp1016.ffa.game.CombatTag
 import me.kaitp1016.ffa.game.ItemFramePreview
 import me.kaitp1016.ffa.game.Revenge
@@ -12,6 +13,7 @@ import me.kaitp1016.ffa.items.ItemManager
 import me.kaitp1016.ffa.items.events.ItemEventPoster
 import me.kaitp1016.ffa.packetgui.PacketGuiManager
 import me.kaitp1016.ffa.setting.Settings
+import me.kaitp1016.ffa.utils.DatapackAPI.getMoney
 import me.kaitp1016.ffa.utils.NMSUtils.asCraftPlayer
 import me.kaitp1016.ffa.utils.RecipeUtils
 import me.kaitp1016.ffa.utils.Scheduler
@@ -19,6 +21,7 @@ import net.minecraft.network.protocol.common.ClientboundServerLinksPacket
 import net.minecraft.server.MinecraftServer
 import net.minecraft.server.ServerLinks
 import org.bukkit.event.EventHandler
+import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.plugin.java.JavaPlugin
@@ -62,6 +65,14 @@ class FFA : JavaPlugin(), Listener {
                 )
             )
         )
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    fun onActionBar(event: UpdateActionBarEvent) {
+        val player = event.player
+        val money = player.asCraftPlayer().handle.getMoney()
+
+        event.addText("§a現在のポイント§7: §b${money}")
     }
 }
 

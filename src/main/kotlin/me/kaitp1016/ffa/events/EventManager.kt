@@ -7,8 +7,10 @@ import me.kaitp1016.ffa.events.impl.PacketReciveEvent
 import me.kaitp1016.ffa.events.impl.PacketSendEvent
 import me.kaitp1016.ffa.events.impl.SecoundEvent
 import me.kaitp1016.ffa.events.impl.TickEvent
+import me.kaitp1016.ffa.events.impl.UpdateActionBarEvent
 import me.kaitp1016.ffa.plugin
 import me.kaitp1016.ffa.utils.NMSUtils.asCraftPlayer
+import net.kyori.adventure.text.Component
 import net.minecraft.network.protocol.Packet
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
@@ -25,6 +27,15 @@ object EventManager: Listener {
         Bukkit.getScheduler().runTaskTimer(plugin, Runnable {
             Bukkit.getPluginManager().callEvent(TickEvent())
         }, 0, 0)
+
+        Bukkit.getScheduler().runTaskTimer(plugin, Runnable {
+            Bukkit.getOnlinePlayers().forEach {
+                val event = UpdateActionBarEvent(it)
+                Bukkit.getPluginManager().callEvent(event)
+
+                if (!event.isCancelled) it.sendActionBar(Component.text(event.actionBar))
+            }
+        }, 0, 2)
     }
 
     @EventHandler

@@ -16,6 +16,8 @@ object ItemFramePreview: Listener {
         val entity = event.rightClicked
         if (entity !is ItemFrame || !entity.asCraftEntity().handle.tags.contains("ffa_previewable")) return
 
+        event.isCancelled = true
+
         val item = entity.item
         if (item.isEmpty) return
 
