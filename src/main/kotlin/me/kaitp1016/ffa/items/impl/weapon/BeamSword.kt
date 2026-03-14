@@ -19,6 +19,7 @@ object BeamSword: CustomItem() {
     override val material = Material.IRON_SWORD
     override val rarity = Rarity.RARE
     override val category = ItemCategory.WEAPON
+    override val description = "この剣で空中に向かって\n殴ろうとするとビームを\n発射する。"
 
     const val BEAM_AMOUNMT = 150
     const val BEAM_DISTANCE = 0.3

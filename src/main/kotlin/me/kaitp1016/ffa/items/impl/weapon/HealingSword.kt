@@ -7,16 +7,18 @@ import me.kaitp1016.ffa.items.events.ItemEventHandler
 import me.kaitp1016.ffa.items.events.ItemEvents
 import me.kaitp1016.ffa.utils.NMSUtils.asCraftItemStack
 import net.minecraft.core.component.DataComponents
+import net.minecraft.resources.Identifier
 import net.minecraft.util.Unit
 import net.minecraft.world.entity.EquipmentSlotGroup
 import net.minecraft.world.entity.ai.attributes.AttributeModifier
 import net.minecraft.world.entity.ai.attributes.Attributes
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.component.ItemAttributeModifiers
+import net.minecraft.world.item.component.UseCooldown
 import org.bukkit.Material
-import org.bukkit.attribute.Attribute
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
+import java.util.*
 
 object HealingSword: CustomItem() {
     override val id = "HEALING_SWORD"
@@ -28,7 +30,10 @@ object HealingSword: CustomItem() {
 
     override val description = "この剣で敵を殴ると、\n殴られたプレイヤーのハートが3つ分回復する。\nクールダウンは5秒。"
 
+    val COOLDOWN_IDENTIFIER = Identifier.parse("ffa:healing_sword_cooldown")
     const val COOLDOWN_TICKS = 5 * 20 // 5秒
+
+    const val HEAL_AMOUNT = 6.0
 
     override fun createItem(amount: Int): ItemStack {
         return super.createItem(amount).asCraftItemStack().handle.apply {
@@ -39,6 +44,7 @@ object HealingSword: CustomItem() {
                 )
             ))
             this.set(DataComponents.UNBREAKABLE, Unit.INSTANCE)
+            this.set(DataComponents.USE_COOLDOWN, UseCooldown(COOLDOWN_TICKS / 20f, Optional.of(COOLDOWN_IDENTIFIER)))
         }.bukkitStack
     }
 
@@ -47,10 +53,9 @@ object HealingSword: CustomItem() {
         val target = event.bukkitEvent.entity as? Player ?: return
         val attacker = event.player
 
-        if (attacker.hasCooldown(material)) return
+        if (attacker.hasCooldown(event.item)) return
+        attacker.setCooldown(event.item, COOLDOWN_TICKS)
 
-        attacker.setCooldown(material, COOLDOWN_TICKS)
-        val maxHealth = target.getAttribute(Attribute.MAX_HEALTH)?.value ?: 20.0
-        target.health = (target.health + 6.0).coerceAtMost(maxHealth)
+        target.heal(HEAL_AMOUNT)
     }
 }

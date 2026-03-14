@@ -30,6 +30,7 @@ object MegaLongBow: CustomItem() {
     override val material = Material.BOW
     override val rarity = Rarity.RARE
     override val category = ItemCategory.WEAPON
+    override val description = "右クリックで引き絞らずに\n矢を発射できる。当たった時に\n跳躍力上昇2を1.5秒間自身に\n付与する。クールダウンは2秒。"
 
     const val COOLDOWN = 2f
     val cooldownLocation = Identifier.parse("ffa:mega_long_bow_cooldown")

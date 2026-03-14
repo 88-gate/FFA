@@ -23,6 +23,7 @@ object GrapplingBow: CustomItem() {
     override val name = "Grappling Crossbow"
     override val rarity = Rarity.RARE
     override val category = ItemCategory.WEAPON
+    override val description = "このアイテムから発射された\n矢が敵に当たると自身を敵に\n向かって飛ばす。"
 
     @ItemEventHandler
     fun onShoot(event: ItemEvents.ShootEvent) {

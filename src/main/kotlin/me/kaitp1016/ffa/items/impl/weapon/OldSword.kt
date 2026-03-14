@@ -63,7 +63,7 @@ object OldSword: CustomItem() {
 
     @ItemEventHandler
     fun onDamageWhileUsing(event:ItemEvents.DamageWhileUsingEvent) {
-        event.bukkitEvent.damage = event.bukkitEvent.damage * 0.7
+        event.bukkitEvent.damage *= 0.7
     }
 
     @ItemEventHandler
