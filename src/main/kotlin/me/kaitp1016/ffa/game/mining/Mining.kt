@@ -13,7 +13,6 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.component.FireworkExplosion
 import net.minecraft.world.item.component.Fireworks
-import net.minecraft.world.phys.AABB
 import org.bukkit.*
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
@@ -27,13 +26,13 @@ object Mining: Listener {
     data class BlockData(val money: IntRange, val chestChance: Double, val respawnTick: Int)
 
     val datas = mapOf(
-        Material.COAL_ORE to BlockData(money = 5..15, chestChance = 0.005, respawnTick = 100),
-        Material.COPPER_ORE to BlockData(money = 8..20, chestChance = 0.005, respawnTick = 150),
-        Material.IRON_ORE to BlockData(money = 10..20, chestChance = 0.005, respawnTick = 150),
-        Material.LAPIS_ORE to BlockData(money = 5..25, chestChance = 0.007, respawnTick = 300),
-        Material.GOLD_ORE to BlockData(money = 20..30, chestChance = 0.007, respawnTick = 500),
-        Material.DIAMOND_ORE to BlockData(money = 25..50, chestChance = 0.01, respawnTick = 1200),
-        Material.AMETHYST_BLOCK to BlockData(money = 1..3, chestChance = 0.005, respawnTick = 60),
+        Material.COAL_ORE to BlockData(money = 0..3, chestChance = 0.005, respawnTick = 100),
+        Material.COPPER_ORE to BlockData(money = 1..2, chestChance = 0.005, respawnTick = 150),
+        Material.IRON_ORE to BlockData(money = 1..3, chestChance = 0.005, respawnTick = 150),
+        Material.LAPIS_ORE to BlockData(money = 0..5, chestChance = 0.007, respawnTick = 300),
+        Material.GOLD_ORE to BlockData(money = 2..4, chestChance = 0.007, respawnTick = 500),
+        Material.DIAMOND_ORE to BlockData(money = 5..10, chestChance = 0.01, respawnTick = 1200),
+        Material.AMETHYST_BLOCK to BlockData(money = 0..2, chestChance = 0.005, respawnTick = 60),
     )
 
     data class MinedPos(val pos: BlockPos, val world: World, val block: Material, val chest: MiningChest? = null, var tick: Int = 0) {
@@ -48,15 +47,10 @@ object Mining: Listener {
 
     val minedPos = mutableListOf<MinedPos>()
 
-    val MINING_WORLD = Bukkit.getWorld("world")!!
-    val MINING_AREA = AABB(38.0, 99.0, 56.0, 2.0, 112.0, 0.0) //  AABB(1000000.0,1000000.0,1000000.0,1000000.0,1000000.0,1000000.0,) //
-
     @EventHandler(priority = EventPriority.LOWEST)
     fun onMine(event: BlockBreakEvent) {
         val block = event.block
         val pos = BlockPos(block.x, block.y, block.z)
-        if (block.world != MINING_WORLD || !MINING_AREA.contains(pos.x.toDouble(), pos.y.toDouble(), pos.z.toDouble())) return
-
         val player = event.player
         val data = datas[block.type] ?: return
 
@@ -104,7 +98,7 @@ object Mining: Listener {
         if (event.action != Action.RIGHT_CLICK_BLOCK) return
 
         val block = event.clickedBlock ?: return
-        if (block.type != Material.CHEST || block.world != MINING_WORLD || !MINING_AREA.contains(block.x.toDouble(),block.y.toDouble(),block.z.toDouble())) return
+        if (block.type != Material.CHEST) return
 
         val pos = minedPos.find { it.chest != null && it.pos.x == block.x && it.pos.y == block.y && it.pos.z == block.z }
         if (pos == null) return
