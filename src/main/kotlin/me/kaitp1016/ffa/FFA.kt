@@ -5,6 +5,7 @@ import com.mojang.datafixers.util.Either
 import me.kaitp1016.ffa.commands.FFACommand
 import me.kaitp1016.ffa.events.EventManager
 import me.kaitp1016.ffa.game.CombatTag
+import me.kaitp1016.ffa.game.ItemFramePreview
 import me.kaitp1016.ffa.game.Revenge
 import me.kaitp1016.ffa.game.VanillaModifier
 import me.kaitp1016.ffa.items.ItemManager
@@ -26,7 +27,7 @@ class FFA : JavaPlugin(), Listener {
     override fun onEnable() {
         plugin = this
 
-        listOf(EventManager,Scheduler, ItemEventPoster, PacketGuiManager, Revenge, CombatTag, VanillaModifier, this)
+        listOf(EventManager,Scheduler, ItemEventPoster, PacketGuiManager, Revenge, CombatTag, VanillaModifier, ItemFramePreview, this)
             .forEach { server.pluginManager.registerEvents(it,plugin) }
 
         Settings
