@@ -54,7 +54,7 @@ object OdinSpear: CustomItem() {
     override val isUnique = true
     override val isEnchantable = false
 
-    const val DAMAGE_MULTIPLIER = 0.2f
+    const val DAMAGE_MULTIPLIER = 0.35f
     const val COOLDOWN = 30f
 
     val cooldownLocation = Identifier.parse("ffa:odin_spear_cooldown")

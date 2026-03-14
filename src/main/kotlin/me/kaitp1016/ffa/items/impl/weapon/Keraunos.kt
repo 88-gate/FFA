@@ -50,7 +50,7 @@ object Keraunos: CustomItem(), Listener {
     override val isUnique = true
     override val isEnchantable = false
 
-    const val THUNDER_DAMAGE_MULTIPLIER = 4.0
+    const val THUNDER_DAMAGE_MULTIPLIER = 2.0
     const val THUNDER_AMOUNTS = 15
     const val THUNDER_SPREAD_DISTANCE = 4.0
     const val COOLDOWN = 40f

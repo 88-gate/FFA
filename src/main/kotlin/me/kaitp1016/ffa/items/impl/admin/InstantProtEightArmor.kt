@@ -43,6 +43,7 @@ object InstantProtEightArmor: CustomItem() {
     @ItemEventHandler
     fun onUsed(event: ItemEvents.UseEvent) {
         val player = event.player
+        if (!consumeOrMessage(player)) return
 
         armors.forEach {
             player.inventory.setItem(it.key,it.value)
