@@ -30,7 +30,7 @@ object MegaLongBow: CustomItem() {
     override val rarity = Rarity.RARE
     override val category = ItemCategory.WEAPON
 
-    const val COOLDOWN = 3f
+    const val COOLDOWN = 2f
     val cooldownLocation = Identifier.parse("ffa:mega_long_bow_cooldown")
 
     override fun createItem(amount: Int): org.bukkit.inventory.ItemStack {
