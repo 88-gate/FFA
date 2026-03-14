@@ -10,8 +10,10 @@ import me.kaitp1016.ffa.events.impl.TickEvent
 import me.kaitp1016.ffa.events.impl.UpdateActionBarEvent
 import me.kaitp1016.ffa.plugin
 import me.kaitp1016.ffa.utils.NMSUtils.asCraftPlayer
+import me.kaitp1016.ffa.utils.NMSUtils.sendPacket
 import net.kyori.adventure.text.Component
 import net.minecraft.network.protocol.Packet
+import net.minecraft.network.protocol.game.ClientboundSetActionBarTextPacket
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
@@ -33,7 +35,7 @@ object EventManager: Listener {
                 val event = UpdateActionBarEvent(it)
                 Bukkit.getPluginManager().callEvent(event)
 
-                if (!event.isCancelled) it.sendActionBar(Component.text(event.actionBar))
+                if (!event.isCancelled) it.sendPacket (ClientboundSetActionBarTextPacket(event.actionBar))
             }
         }, 0, 2)
     }

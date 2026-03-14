@@ -1,5 +1,6 @@
 package me.kaitp1016.ffa.events.impl
 
+import net.minecraft.network.chat.Component
 import org.bukkit.entity.Player
 import org.bukkit.event.Cancellable
 import org.bukkit.event.HandlerList
@@ -8,14 +9,23 @@ import org.bukkit.event.player.PlayerEvent
 class UpdateActionBarEvent(player: Player) : PlayerEvent(player), Cancellable {
     private var cancel = false
 
-    var actionBar = ""
+    var actionBar = Component.empty()
     var times = 0
 
     fun addText(text: String) {
         if (times > 0) {
-            actionBar += " §7| §a"
+            actionBar.append(Component.literal(" §7| §a"))
         }
-        actionBar += text
+        actionBar.append(Component.literal(text))
+        times++
+    }
+
+    fun addComponent(component: Component) {
+        if (times > 0) {
+            actionBar.append(Component.literal(" §7| §a"))
+        }
+
+        actionBar.append(component)
         times++
     }
 

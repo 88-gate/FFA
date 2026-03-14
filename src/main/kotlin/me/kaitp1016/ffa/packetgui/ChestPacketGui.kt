@@ -20,8 +20,8 @@ abstract class ChestPacketGui: AbstractPacketGui {
     val syncId:Int
     val size: Int
     val menuType: MenuType<*>
-    val items: NonNullList<ItemStack>
     var openParentSlot: Int? = null
+    open val items: NonNullList<ItemStack> by lazy { NonNullList.withSize(size, ItemStack.EMPTY) }
 
     abstract val displayName: Component
 
@@ -29,7 +29,6 @@ abstract class ChestPacketGui: AbstractPacketGui {
         this.syncId = player.nextContainerCounter()
         this.size = size
         this.menuType = menuTypeMap[size] ?: throw IllegalArgumentException("size is must be one of ${menuTypeMap.keys.joinToString()}.")
-        this.items = NonNullList.withSize<ItemStack>(size, ItemStack.EMPTY)
     }
 
     override fun onPacketRecive(event: PacketReciveEvent) {

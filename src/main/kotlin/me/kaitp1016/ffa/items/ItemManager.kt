@@ -16,9 +16,9 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.persistence.PersistentDataType
 
 object ItemManager {
-    val NAMESPACED_KEY_ITEM_ID = NamespacedKey(plugin,"item_id")
+    val NAMESPACED_KEY_ITEM_ID = NamespacedKey(plugin, "item_id")
 
-    val items = arrayOf(AdminSword, SuperSword, AdminArmor.AdminBoots, AdminArmor.AdminLeggings, AdminArmor.AdminChestplate, AdminArmor.AdminHelmet,AspectOfTheVoid, SmeltPickaxe, DiamondSmeltPickaxe, RefinedDiamondSword, AwakenedDiamondSword, PortableAnvil, PortableCraftingTable, PortableEnchantingTable, MegaLongBow, GoldenHead, DiamondShear, InstantWall, RandomCookie,CookieClickerCookie, FastSword, InstantProtFourArmor, InstantProtEightArmor, FFAKitSelector, FlyFeather, GrapplingHook,GrapplingBow, Keraunos, Pratidhvani, OdinSpear, Excalibur, BeamSword, FlintSword, FlintShovel, Fireball,ThrowableTNT, Overenchant, Caladbolg,SettingBook,EmeraldBlade, Durandal, OldSword, Berserker, HealingSword, Dasher,SprintPack)
+    val items = arrayOf(AdminSword, SuperSword, AdminArmor.AdminBoots, AdminArmor.AdminLeggings, AdminArmor.AdminChestplate, AdminArmor.AdminHelmet, AspectOfTheVoid, SmeltPickaxe, DiamondSmeltPickaxe, RefinedDiamondSword, AwakenedDiamondSword, PortableAnvil, PortableCraftingTable, PortableEnchantingTable, MegaLongBow, GoldenHead, DiamondShear, InstantWall, RandomCookie, CookieClickerCookie, FastSword, InstantProtFourArmor, InstantProtEightArmor, FFAKitSelector, FlyFeather, GrapplingHook, GrapplingBow, Keraunos, Pratidhvani, OdinSpear, Excalibur, BeamSword, FlintSword, FlintShovel, Fireball, ThrowableTNT, Overenchant, Caladbolg, SettingBook, EmeraldBlade, Durandal, OldSword, Berserker, HealingSword, Dasher, SprintPack)
     val itemIdMap = mutableMapOf<String, CustomItem>()
 
     private var nextInternalId = 0
@@ -32,7 +32,7 @@ object ItemManager {
         ItemEventManager.register(item)
 
         if (item is Listener) {
-            plugin.server.pluginManager.registerEvents(item,plugin)
+            plugin.server.pluginManager.registerEvents(item, plugin)
         }
     }
 
