@@ -1,11 +1,11 @@
 package me.kaitp1016.ffa.items.impl.misc
 
+import me.kaitp1016.ffa.events.impl.TickEvent
 import me.kaitp1016.ffa.items.CustomItem
 import me.kaitp1016.ffa.items.ItemCategory
 import me.kaitp1016.ffa.items.Rarity
 import me.kaitp1016.ffa.items.events.ItemEventHandler
 import me.kaitp1016.ffa.items.events.ItemEvents
-import me.kaitp1016.ffa.plugin
 import me.kaitp1016.ffa.utils.NMSUtils.asCraftItemStack
 import me.kaitp1016.ffa.utils.Utils.equalsOneOf
 import net.minecraft.core.component.DataComponents
@@ -18,7 +18,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.player.PlayerFishEvent
 import org.bukkit.inventory.ItemStack
 import org.bukkit.potion.PotionEffectType
-import org.bukkit.Bukkit
+import java.util.*
 
 object GrapplingHook: CustomItem(), Listener {
     override val id = "GRAPPLING_HOOK"
@@ -27,7 +27,10 @@ object GrapplingHook: CustomItem(), Listener {
     override val rarity = Rarity.EPIC
     override val category = ItemCategory.MISC
 
-    private val coolDownPlayers = mutableListOf<Player>()
+    data class CombatCooldown(val uuid: UUID, var cooldown: Int)
+
+    const val COMBAT_COOLDOWN = 100
+    private val cooldowns = mutableListOf<CombatCooldown>()
 
     override fun createItem(amount: Int): ItemStack {
         return super.createItem(amount).asCraftItemStack().handle.apply {
@@ -50,6 +53,7 @@ object GrapplingHook: CustomItem(), Listener {
             }
         }
         if (!hasNearbyBlock) return
+
         val player = event.player
 
         if (player.fireTicks > 0) {
@@ -64,7 +68,8 @@ object GrapplingHook: CustomItem(), Listener {
             return
         }
 
-        if (coolDownPlayers.contains(player)) {
+        val uuid = player.uniqueId
+        if (cooldowns.any { it.uuid == uuid }) {
             player.sendMessage("殴られた直後は使えません。")
             event.isCancelled = true
             return
@@ -78,13 +83,25 @@ object GrapplingHook: CustomItem(), Listener {
     }
 
     @EventHandler
+    fun onTick(event: TickEvent) {
+        cooldowns.removeAll {
+            it.cooldown--
+            return@removeAll it.cooldown < 1
+        }
+    }
+
+    @EventHandler
     fun onEntityDamageByEntity(event: EntityDamageByEntityEvent) {
         if (event.entity !is Player || event.damager !is Player) return
         val player = event.entity as Player
-        if (coolDownPlayers.contains(player)) return
-        coolDownPlayers.add(player)
-        Bukkit.getScheduler().runTaskLater(plugin, Runnable {
-            coolDownPlayers.remove(player)
-        }, 100L)
+        val uuid = player.uniqueId
+
+        val cooldown = cooldowns.find { it.uuid == uuid }
+        if (cooldown == null) {
+            cooldowns.add(CombatCooldown(uuid,COMBAT_COOLDOWN))
+        }
+        else {
+            cooldown.cooldown = COMBAT_COOLDOWN
+        }
     }
 }
