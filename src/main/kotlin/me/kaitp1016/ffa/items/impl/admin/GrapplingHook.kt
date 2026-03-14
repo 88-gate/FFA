@@ -37,8 +37,19 @@ object GrapplingHook: CustomItem(), Listener {
 
     @ItemEventHandler
     fun onFish(event: ItemEvents.FishEvent) {
-        //空飛べたから修正
-        if (event.bukkitEvent.state != PlayerFishEvent.State.IN_GROUND) return
+        if (!event.bukkitEvent.state.equalsOneOf(PlayerFishEvent.State.IN_GROUND, PlayerFishEvent.State.REEL_IN)) return
+
+        // フックが地面付近にあるかチェック（バウンド対策）
+        val hookLoc = event.bukkitEvent.hook.location
+        val hasNearbyBlock = (-1..1).any { dx ->
+            (-1..1).any { dy ->
+                (-1..1).any { dz ->
+                    val block = hookLoc.clone().add(dx * 0.1, dy * 0.1, dz * 0.1).block
+                    block.type.isSolid
+                }
+            }
+        }
+        if (!hasNearbyBlock) return
         val player = event.player
 
         if (player.fireTicks > 0) {
