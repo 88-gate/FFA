@@ -23,7 +23,7 @@ import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.server.PluginDisableEvent
 
 object Mining: Listener {
-    data class BlockData(val money: IntRange, val chestChance: Double, val respawnTick: Int)
+    data class BlockData(val money: IntRange, val chestChance: Double, val respawnTick: Int,val bedrock:Boolean = true)
 
     val datas = mapOf(
         Material.COAL_ORE to BlockData(money = 0..3, chestChance = 0.005, respawnTick = 100),
@@ -32,7 +32,7 @@ object Mining: Listener {
         Material.LAPIS_ORE to BlockData(money = 0..5, chestChance = 0.007, respawnTick = 300),
         Material.GOLD_ORE to BlockData(money = 2..4, chestChance = 0.007, respawnTick = 500),
         Material.DIAMOND_ORE to BlockData(money = 5..10, chestChance = 0.01, respawnTick = 1200),
-        Material.AMETHYST_BLOCK to BlockData(money = 0..2, chestChance = 0.005, respawnTick = 60),
+        Material.AMETHYST_BLOCK to BlockData(money = 0..2, chestChance = 0.005, respawnTick = 60, bedrock = false),
     )
 
     data class MinedPos(val pos: BlockPos, val world: World, val block: Material, val chest: MiningChest? = null, var tick: Int = 0) {
@@ -60,8 +60,8 @@ object Mining: Listener {
         player.asCraftPlayer().handle.addMoney(reward)
         MiningActionBarHandler.onMine(player, block, reward, data)
 
+        val world = block.world
         if (Math.random() <= data.chestChance) {
-            val world = block.world
             val chest = MiningChest(pos)
             minedPos.add(MinedPos(pos, world, block.type, chest, data.respawnTick))
             world.setBlockData(block.x, block.y, block.z, Material.CHEST.createBlockData())
@@ -74,9 +74,9 @@ object Mining: Listener {
             level.addFreshEntity(FireworkRocketEntity(level,block.x.toDouble() + 0.5,block.y.toDouble() + 1,block.z.toDouble() + 0.5,item))
         }
         else {
-            val world = block.world
             minedPos.add(MinedPos(pos, world, block.type, tick = data.respawnTick))
-            world.setBlockData(block.x, block.y, block.z, Material.BEDROCK.createBlockData())
+            val material = if (data.bedrock) Material.BEDROCK else Material.AIR
+            world.setBlockData(block.x, block.y, block.z, material.createBlockData())
         }
     }
 
