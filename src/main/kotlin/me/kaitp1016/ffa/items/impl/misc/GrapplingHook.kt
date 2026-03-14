@@ -1,4 +1,4 @@
-package me.kaitp1016.ffa.items.impl.admin
+package me.kaitp1016.ffa.items.impl.misc
 
 import me.kaitp1016.ffa.items.CustomItem
 import me.kaitp1016.ffa.items.ItemCategory
@@ -18,14 +18,14 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.player.PlayerFishEvent
 import org.bukkit.inventory.ItemStack
 import org.bukkit.potion.PotionEffectType
-import org.bukkit.scheduler.BukkitRunnable
+import org.bukkit.Bukkit
 
 object GrapplingHook: CustomItem(), Listener {
     override val id = "GRAPPLING_HOOK"
     override val name = "グラップリングフック"
     override val material = Material.FISHING_ROD
-    override val rarity = Rarity.ADMIN
-    override val category = ItemCategory.ADMIN
+    override val rarity = Rarity.EPIC
+    override val category = ItemCategory.MISC
 
     private val coolDownPlayers = mutableListOf<Player>()
 
@@ -83,10 +83,8 @@ object GrapplingHook: CustomItem(), Listener {
         val player = event.entity as Player
         if (coolDownPlayers.contains(player)) return
         coolDownPlayers.add(player)
-        object : BukkitRunnable() {
-            override fun run() {
-                coolDownPlayers.remove(player)
-            }
-        }.runTaskLater(plugin, 100L)
+        Bukkit.getScheduler().runTaskLater(plugin, Runnable {
+            coolDownPlayers.remove(player)
+        }, 100L)
     }
 }
