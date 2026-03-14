@@ -54,6 +54,9 @@ object Excalibur: CustomItem() {
     @ItemEventHandler
     fun onAttack(event: ItemEvents.DamageEntityEvent) {
         val target = event.bukkitEvent.entity as? Player ?: return
-        if (Random.nextInt(0,9) == 0) target.addPotionEffect(PotionEffect(PotionEffectType.BLINDNESS,30,0,false,true,true))
+        if (Random.nextInt(0,9) == 0) {
+            target.addPotionEffect(PotionEffect(PotionEffectType.BLINDNESS,30,0,false,true,true))
+            target.world.playSound(target.location, Sound.ENTITY_ALLAY_ITEM_TAKEN,2f,0.85f)
+        }
     }
 }

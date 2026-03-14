@@ -92,12 +92,12 @@ object Caladbolg: CustomItem() {
 
         if (!player.cooldowns.isOnCooldown(item)) {
             player.cooldowns.addCooldown(cooldownLocation,COOLDOWN.toInt() * 20)
-            event.player.playSound(event.player, Sound.ITEM_TRIDENT_THUNDER,1f,2f)
+            event.player.playSound(event.player.location, Sound.ITEM_TRIDENT_THUNDER,1f,2f)
             power(item)
 
             Scheduler.scheduleTask(ABILITY_TIME.toInt() * 20) {
                 unpower(item)
-                event.player.playSound(event.player, Sound.ITEM_TRIDENT_THROW,1f,0f)
+                event.player.world.playSound(event.player, Sound.ITEM_TRIDENT_THROW,1f,0f)
             }
         }
     }

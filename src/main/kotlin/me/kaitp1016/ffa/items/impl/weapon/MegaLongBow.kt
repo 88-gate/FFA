@@ -21,6 +21,7 @@ import net.minecraft.world.item.component.UseCooldown
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.EntityHitResult
 import org.bukkit.Material
+import org.bukkit.Sound
 import java.util.*
 
 object MegaLongBow: CustomItem() {
@@ -55,6 +56,8 @@ object MegaLongBow: CustomItem() {
 
         val arrow = Projectile.spawnProjectileFromRotationDelayed(MegaLongBowArrow::new,level,weapon,player, 0f, 2.5f, 1.0f)
         if (arrow.attemptSpawn()) {
+            player.bukkitEntity.world.playSound(player.bukkitEntity.location,Sound.ENTITY_ARROW_SHOOT,2f,1.3f)
+
             arrow.projectile().apply {
                 this.pickupItemStack = pickupItem
 
