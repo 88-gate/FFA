@@ -36,15 +36,10 @@ object Excalibur: CustomItem() {
     override val isUnique = true
     override val isEnchantable = false
 
-    override val description = "右クリックで能力を使用する。\n自身に再生4を5秒間付与する。\nクールダウンは20秒。\nまた、この剣で殴られた敵には10%の確立で\n盲目を1.5秒間付与する。"
-    override val history = "いつか歴史的な説明書く。"
-
-    const val COOLDOWN = 20f
-    val cooldownLocation = Identifier.parse("ffa:excalibur_cooldown")
+    override val description = "この剣で殴られた敵には10%の確立で\n盲目を1.5秒間付与する。"
 
     override fun createItem(amount: Int): ItemStack {
         return super.createItem(amount).asCraftItemStack().handle.apply {
-            this.set(DataComponents.USE_COOLDOWN, UseCooldown(COOLDOWN, Optional.of(cooldownLocation)))
             this.set(DataComponents.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers(
                 listOf(
                     ItemAttributeModifiers.Entry(Attributes.ATTACK_DAMAGE, AttributeModifier(Item.BASE_ATTACK_DAMAGE_ID, 11.0, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND),
@@ -54,18 +49,6 @@ object Excalibur: CustomItem() {
             this.set(DataComponents.ITEM_MODEL, Identifier.parse("minecraft:diamond_sword"))
             this.set(DataComponents.UNBREAKABLE, Unit.INSTANCE)
         }.bukkitStack
-    }
-
-    @ItemEventHandler
-    fun onUse(event: ItemEvents.UseEvent) {
-        val item = event.item.asCraftItemStack().handle
-        val player = event.player.asCraftPlayer().handle
-
-        if (!player.cooldowns.isOnCooldown(item)) {
-            player.cooldowns.addCooldown(cooldownLocation,COOLDOWN.toInt() * 20)
-            event.player.playSound(event.player, Sound.BLOCK_BEACON_ACTIVATE,1f,2f)
-            player.addEffect(MobEffectInstance(MobEffects.REGENERATION,100,3))
-        }
     }
 
     @ItemEventHandler
