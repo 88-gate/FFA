@@ -1,8 +1,10 @@
 package me.kaitp1016.ffa.items.impl.misc
 
 import me.kaitp1016.ffa.events.impl.TickEvent
+import me.kaitp1016.ffa.events.impl.UpdateActionBarEvent
 import me.kaitp1016.ffa.items.CustomItem
 import me.kaitp1016.ffa.items.ItemCategory
+import me.kaitp1016.ffa.items.ItemManager.getBattleRoyalItemID
 import me.kaitp1016.ffa.items.Rarity
 import me.kaitp1016.ffa.items.events.ItemEventHandler
 import me.kaitp1016.ffa.items.events.ItemEvents
@@ -13,6 +15,7 @@ import net.minecraft.util.Unit
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
+import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.player.PlayerFishEvent
@@ -88,6 +91,16 @@ object GrapplingHook: CustomItem(), Listener {
             it.cooldown--
             return@removeAll it.cooldown < 1
         }
+    }
+
+    @EventHandler(priority = EventPriority.HIGH)
+    fun onActionBar(event: UpdateActionBarEvent) {
+        val player = event.player
+        val uuid = player.uniqueId
+        val cooldown = cooldowns.find { it.uuid == uuid }
+        if (cooldown == null || player.inventory.itemInMainHand.getBattleRoyalItemID() != this.id ) return
+
+        event.addText("§5Grappling Hook§7: §9${cooldown.cooldown / 20}秒")
     }
 
     @EventHandler

@@ -58,7 +58,7 @@ object CombatTag: Listener {
         val time = player.getCombatTagTime()
         if (time == -1L) return
 
-        event.addText("§aCombat Tag§7: §b${time / 1000}§a秒")
+        event.addText("§cCombat Tag§7: §e${time / 1000}秒")
     }
 
 

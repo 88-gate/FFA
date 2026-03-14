@@ -8,10 +8,16 @@ website: https://discord.gg/2PGFuasqFM
 
 commands:
   ffa:
-    description: Your description
-    usage: /<command>
+    description: ffaの管理用コマンド
+    usage: /ffa
     permission: ffa.commands.ffa
+  spawn:
+    description: スポーンにテレポート
+    usage: /spapwn
+    permission: ffa.commands.spawn
 
 permissions:
   ffa.commands.ffa:
     default: op
+  ffa.commands.spawn:
+    default: true

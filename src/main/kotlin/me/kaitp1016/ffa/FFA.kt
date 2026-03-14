@@ -3,6 +3,7 @@ package me.kaitp1016.ffa
 import com.google.gson.GsonBuilder
 import com.mojang.datafixers.util.Either
 import me.kaitp1016.ffa.commands.FFACommand
+import me.kaitp1016.ffa.commands.SpawnCommand
 import me.kaitp1016.ffa.events.EventManager
 import me.kaitp1016.ffa.events.impl.UpdateActionBarEvent
 import me.kaitp1016.ffa.game.CombatTag
@@ -39,6 +40,11 @@ class FFA : JavaPlugin(), Listener {
         this.getCommand("ffa")!!.apply {
             this.setExecutor(FFACommand)
             this.tabCompleter = FFACommand
+        }
+
+        this.getCommand("spawn")!!.apply {
+            this.setExecutor(SpawnCommand)
+            this.tabCompleter = SpawnCommand
         }
 
         RecipeUtils.updateAllData()
