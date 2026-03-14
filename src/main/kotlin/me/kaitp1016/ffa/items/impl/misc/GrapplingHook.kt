@@ -14,7 +14,7 @@ import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
-import org.bukkit.event.entity.EntityDamageByEntityEvent
+import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.player.PlayerFishEvent
 import org.bukkit.inventory.ItemStack
 import org.bukkit.potion.PotionEffectType
@@ -91,9 +91,16 @@ object GrapplingHook: CustomItem(), Listener {
     }
 
     @EventHandler
-    fun onEntityDamageByEntity(event: EntityDamageByEntityEvent) {
-        if (event.entity !is Player || event.damager !is Player) return
-        val player = event.entity as Player
+    fun onDamage(event: EntityDamageEvent) {
+        val source = event.damageSource
+        val damager = source.causingEntity as? Player ?: return
+        val player = event.entity as? Player ?: return
+
+        setCooldown(player)
+        setCooldown(damager)
+    }
+
+    fun setCooldown(player: Player) {
         val uuid = player.uniqueId
 
         val cooldown = cooldowns.find { it.uuid == uuid }
