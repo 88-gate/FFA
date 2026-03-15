@@ -13,7 +13,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 
 object MiningActionBarHandler: Listener {
-    data class ActionBarData(val player:Player, val text: Component, var tick: Int = 40,val stroke: Int)
+    data class ActionBarData(val player:Player, val text: Component, var tick: Int = 100,val stroke: Int)
     var datas = mutableListOf<ActionBarData>()
 
     fun onMine(player: Player, block: Block, reward: Int, data: Mining.BlockData) {

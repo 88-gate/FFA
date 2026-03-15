@@ -32,7 +32,7 @@ object GrapplingHook: CustomItem(), Listener {
 
     data class CombatCooldown(val uuid: UUID, var cooldown: Int)
 
-    const val COMBAT_COOLDOWN = 100
+    const val COMBAT_COOLDOWN = 200
     private val cooldowns = mutableListOf<CombatCooldown>()
 
     override fun createItem(amount: Int): ItemStack {

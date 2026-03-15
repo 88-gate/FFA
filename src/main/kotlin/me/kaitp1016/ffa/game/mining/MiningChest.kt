@@ -29,16 +29,16 @@ class MiningChest {
         if (group in 0..600) {
             return MineReward(Random.nextInt(0,5), Items.STONE,Sound.BLOCK_STONE_BREAK)
         }
-        if (group in 600..800) {
+        if (group in 600..880) {
             return MineReward(Random.nextInt(1,10), Items.DEEPSLATE,Sound.BLOCK_DEEPSLATE_BREAK)
         }
-        if (group in 800..920) {
+        if (group in 880..965) {
             return MineReward(Random.nextInt(10,20), Items.COAL,Sound.ENTITY_EXPERIENCE_ORB_PICKUP)
         }
-        if (group in 920..965) {
+        if (group in 965..985) {
             return MineReward(Random.nextInt(20,50), Items.IRON_INGOT,Sound.BLOCK_AMETHYST_BLOCK_PLACE)
         }
-        if (group in 965..995) {
+        if (group in 985..997) {
             return MineReward(Random.nextInt(50,300), Items.GOLD_INGOT,Sound.BLOCK_NOTE_BLOCK_PLING)
         }
         else {

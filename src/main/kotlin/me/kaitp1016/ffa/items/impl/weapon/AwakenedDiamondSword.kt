@@ -25,7 +25,7 @@ object AwakenedDiamondSword: CustomItem() {
             this.set(
                 DataComponents.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers(
                     listOf(
-                        ItemAttributeModifiers.Entry(Attributes.ATTACK_DAMAGE, AttributeModifier(Item.BASE_ATTACK_DAMAGE_ID, 11.0, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND),
+                        ItemAttributeModifiers.Entry(Attributes.ATTACK_DAMAGE, AttributeModifier(Item.BASE_ATTACK_DAMAGE_ID, 10.5, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND),
                         ItemAttributeModifiers.Entry(Attributes.ATTACK_SPEED, AttributeModifier(Item.BASE_ATTACK_SPEED_ID, -2.4, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND),
                     )
                 )

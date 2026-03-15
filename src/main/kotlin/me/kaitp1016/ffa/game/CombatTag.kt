@@ -10,6 +10,7 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageEvent
+import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.player.PlayerQuitEvent
 
 object CombatTag: Listener {
@@ -33,6 +34,12 @@ object CombatTag: Listener {
             val damageSource = DamageSource.builder(DamageType.MAGIC).build()
             player.damage(1000000.0,damageSource)
         }
+    }
+
+    @EventHandler
+    fun onDeath(event: PlayerDeathEvent) {
+        val player = event.player
+        combatTagStatus.remove(player)
     }
 
     @EventHandler

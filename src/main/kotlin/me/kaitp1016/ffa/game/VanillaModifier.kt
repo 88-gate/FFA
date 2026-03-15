@@ -10,17 +10,23 @@ import org.bukkit.event.enchantment.PrepareItemEnchantEvent
 import org.bukkit.event.inventory.PrepareAnvilEvent
 
 object VanillaModifier: Listener {
-    const val MAX_PROTECTION_LEVEL = 2
+    val MAX_ENCHANTMENT_LEVLES = mapOf(
+        Enchantment.PROTECTION to 2,
+        Enchantment.SHARPNESS to 3,
+        Enchantment.DENSITY to 2,
+        Enchantment.BREACH to 2,
+        Enchantment.LUNGE to 1,
+        Enchantment.POWER to 3,
+    )
 
     @EventHandler
     fun onPrepareEnchant(event: PrepareItemEnchantEvent) {
         event.offers.forEach { offer ->
             if (offer == null) return@forEach
 
-            when (offer.enchantment) {
-                Enchantment.PROTECTION -> {
-                    if (offer.enchantmentLevel > MAX_PROTECTION_LEVEL) offer.enchantmentLevel = MAX_PROTECTION_LEVEL
-                }
+            val maxLevel = MAX_ENCHANTMENT_LEVLES[offer.enchantment]
+            if (maxLevel != null && maxLevel < offer.enchantmentLevel) {
+                offer.enchantmentLevel = maxLevel
             }
         }
 
@@ -40,10 +46,9 @@ object VanillaModifier: Listener {
         val modifies = mutableMapOf<Enchantment, Int?>()
 
         event.enchantsToAdd.forEach { (enchant, level) ->
-            when (enchant) {
-                Enchantment.PROTECTION -> {
-                    if (level > MAX_PROTECTION_LEVEL) modifies[Enchantment.PROTECTION] = MAX_PROTECTION_LEVEL
-                }
+            val maxLevel = MAX_ENCHANTMENT_LEVLES[enchant]
+            if (maxLevel != null && maxLevel < level) {
+                modifies[enchant] = maxLevel
             }
         }
 
@@ -61,9 +66,10 @@ object VanillaModifier: Listener {
         val item = event.result ?: return
 
         item.enchantments.forEach { (enchant, level) ->
-            when (enchant) {
-                Enchantment.PROTECTION -> {
-                    if (level > 2) item.addUnsafeEnchantment(Enchantment.PROTECTION, 2)
+            val maxLevel = MAX_ENCHANTMENT_LEVLES[enchant]
+            if (maxLevel != null && maxLevel < level) {
+                if (level > maxLevel) {
+                    item.addUnsafeEnchantment(enchant, maxLevel)
                 }
             }
         }

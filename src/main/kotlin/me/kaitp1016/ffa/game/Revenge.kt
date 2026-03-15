@@ -1,6 +1,7 @@
 package me.kaitp1016.ffa.game
 
 import me.kaitp1016.ffa.events.impl.TickEvent
+import me.kaitp1016.ffa.events.impl.UpdateActionBarEvent
 import me.kaitp1016.ffa.setting.Settings
 import me.kaitp1016.ffa.utils.DatapackAPI.addMoney
 import me.kaitp1016.ffa.utils.NMSUtils.asCraftPlayer
@@ -10,10 +11,10 @@ import org.bukkit.Bukkit
 import org.bukkit.Sound
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
+import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.PlayerDeathEvent
-import kotlin.random.Random
 
 object Revenge: Listener {
     data class RevengeTarget(val player: Player, val killer: Player, var tick: Int)
@@ -23,6 +24,7 @@ object Revenge: Listener {
     @EventHandler
     fun onDeath(event: PlayerDeathEvent) {
         val player = event.player
+        revenges.removeIf { it.killer == player }
         val source = event.damageSource
         val killer = source.causingEntity as? Player ?: return
 
@@ -77,5 +79,13 @@ object Revenge: Listener {
             revenge.player.sendMessage("§e復讐の意思を失ってしまった...")
             return@removeAll true
         }
+    }
+
+    @EventHandler(priority = EventPriority.HIGH)
+    fun onActionBar(event: UpdateActionBarEvent) {
+        val player = event.player
+        val revenge = revenges.find { it.player == player } ?: return
+
+        event.addText("§9復讐対象§7: §5${revenge.killer.name}")
     }
 }
