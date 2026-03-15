@@ -205,18 +205,6 @@ object ItemEventPoster: Listener {
 
             ItemEvents.TickWhileHolding(item,player).post()
         }
-
-        tick++
-        if (tick >= 20) {
-            tick = 0
-
-            Bukkit.getOnlinePlayers().forEach{player ->
-                val item = player.inventory.itemInMainHand
-                if (!item.isBattleRoyalItem()) return@forEach
-
-                ItemEvents.SecoundWhileHolding(item,player).post()
-            }
-        }
     }
 
 

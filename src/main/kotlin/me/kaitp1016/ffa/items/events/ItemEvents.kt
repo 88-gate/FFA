@@ -69,12 +69,6 @@ object ItemEvents {
         }
     }
 
-    class SecoundWhileHolding: ItemEvent {
-        constructor(item: ItemStack,player: Player):super(item,player) {
-
-        }
-    }
-
     class ShootEvent: CancellableItemEvent {
         val bukkitEvent: EntityShootBowEvent
 
