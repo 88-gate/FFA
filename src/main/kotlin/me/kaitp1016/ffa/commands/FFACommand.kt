@@ -46,7 +46,7 @@ object FFACommand : CommandExecutor, TabCompleter {
         }
 
         if (args[0] == "minecontainertest") {
-            MiningChest(BlockPos.ZERO).openContainer(sender.asCraftPlayer().handle)
+            MiningChest(BlockPos.ZERO,sender.uniqueId).openContainer(sender.asCraftPlayer().handle)
         }
 
         if (args[0] == "setting") {

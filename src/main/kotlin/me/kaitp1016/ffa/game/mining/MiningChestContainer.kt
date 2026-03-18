@@ -22,10 +22,23 @@ class MiningChestContainer: ChestPacketGui {
     constructor(player: ServerPlayer, chest: MiningChest, parent: AbstractPacketGui? = null):super(player,27) {
         this.parent = parent
         this.chest = chest
-        
+
         this.items.fill(ItemStack(Items.GRAY_STAINED_GLASS_PANE).apply {
             this.set(DataComponents.ITEM_NAME,Component.text("クリックして掘る!").toMCComponent())
         })
+
+        if (chest.finder != player.uuid) {
+            for (index in 0..<items.size) {
+                if (Math.random() > 0.6f)  continue
+
+                val reward = chest.rewards[index]
+
+                this.items[index] = ItemStack(reward.item).apply {
+                    this.set(DataComponents.ITEM_NAME,Component.text("ここはもう掘られているようだ...").toMCComponent())
+                    this.set(DataComponents.LORE, ItemLore(listOf(Component.text("§e${reward.money} ポイント").decoration(TextDecoration.ITALIC,false).toMCComponent())))
+                }
+            }
+        }
     }
 
     override fun onClick(packet: ServerboundContainerClickPacket) {

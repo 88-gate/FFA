@@ -33,12 +33,12 @@ object Mining: Listener {
         Material.IRON_ORE to BlockData(money = { Random.nextInt(1,3) }, chestChance = 0.02, respawnTick = 1500),
         Material.LAPIS_ORE to BlockData(money = { Random.nextInt(0,5) }, chestChance = 0.02, respawnTick = 1200),
         Material.GOLD_ORE to BlockData(money = { Random.nextInt(2,4) }, chestChance = 0.025, respawnTick = 800),
-        Material.DIAMOND_ORE to BlockData(money = { Random.nextInt(5,10) }, chestChance = 0.035, respawnTick = 1400),
-        Material.DEEPSLATE_COAL_ORE to BlockData(money = { Random.nextInt(2,5) }, chestChance = 0.015, respawnTick = 1200),
-        Material.DEEPSLATE_COPPER_ORE to BlockData(money = { Random.nextInt(3,6) }, chestChance = 0.015, respawnTick = 1200),
+        Material.DIAMOND_ORE to BlockData(money = { Random.nextInt(5,25) }, chestChance = 0.035, respawnTick = 1400),
+        Material.DEEPSLATE_COAL_ORE to BlockData(money = { Random.nextInt(2,5) }, chestChance = 0.02, respawnTick = 1200),
+        Material.DEEPSLATE_COPPER_ORE to BlockData(money = { Random.nextInt(3,6) }, chestChance = 0.02, respawnTick = 1200),
         Material.DEEPSLATE_IRON_ORE to BlockData(money = { Random.nextInt(4,6) }, chestChance = 0.02, respawnTick = 1500),
-        Material.DEEPSLATE_LAPIS_ORE to BlockData(money = { Random.nextInt(0,12) }, chestChance = 0.02, respawnTick = 1200),
-        Material.DEEPSLATE_GOLD_ORE to BlockData(money = { Random.nextInt(3,10) }, chestChance = 0.025, respawnTick = 800),
+        Material.DEEPSLATE_LAPIS_ORE to BlockData(money = { Random.nextInt(0,12) }, chestChance = 0.035, respawnTick = 1200),
+        Material.DEEPSLATE_GOLD_ORE to BlockData(money = { Random.nextInt(3,16) }, chestChance = 0.03, respawnTick = 800),
         Material.DEEPSLATE_DIAMOND_ORE to BlockData(money = { Random.nextInt(5,25) }, chestChance = 0.05, respawnTick = 1400),
         Material.AMETHYST_BLOCK to BlockData(money = { if (Random.nextInt(0,2) == 0) Random.nextInt(0,4) else 0 }, chestChance = 0.005, respawnTick = 2000, bedrock = false),
         Material.BUDDING_AMETHYST to BlockData(money = { Random.nextInt(5,15) }, chestChance = 0.04, respawnTick = 2000, bedrock = true),
@@ -75,7 +75,7 @@ object Mining: Listener {
 
         val world = block.world
         if (Math.random() <= data.chestChance) {
-            val chest = MiningChest(pos)
+            val chest = MiningChest(pos,player.uniqueId)
             minedPos.add(MinedPos(pos, world, block.type, chest, data.respawnTick))
             world.setBlockData(block.x, block.y, block.z, Material.CHEST.createBlockData())
 
