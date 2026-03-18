@@ -5,6 +5,7 @@ import me.kaitp1016.ffa.events.impl.UpdateActionBarEvent
 import me.kaitp1016.ffa.setting.Settings
 import me.kaitp1016.ffa.utils.DatapackAPI.addMoney
 import me.kaitp1016.ffa.utils.NMSUtils.asCraftPlayer
+import me.kaitp1016.ffa.utils.Scheduler
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.Bukkit
@@ -24,7 +25,6 @@ object Revenge: Listener {
     @EventHandler
     fun onDeath(event: PlayerDeathEvent) {
         val player = event.player
-        revenges.removeIf { it.killer == player }
         val source = event.damageSource
         val killer = source.causingEntity as? Player ?: return
 
@@ -48,8 +48,7 @@ object Revenge: Listener {
             }
         }
 
-        revenges.removeIf { it.player.uniqueId == player.uniqueId }
-
+        revenges.removeAll { it.player.uniqueId == player.uniqueId || it.killer.uniqueId == player.uniqueId }
         revenges.add(RevengeTarget(player,killer, Settings.REVENGE_EXPIRE_TIME.getValue()))
 
         player.sendMessage(Component.text("あなたは ").color(NamedTextColor.YELLOW).append(killer.name().append(Component.text(" §rに復讐したいと感じた...").color(NamedTextColor.YELLOW))))
