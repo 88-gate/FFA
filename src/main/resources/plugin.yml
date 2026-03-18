@@ -1,5 +1,5 @@
 name: FFA
-version: '1.1.4'
+version: '1.1.6'
 main: me.kaitp1016.ffa.FFA
 api-version: '1.21'
 authors: [ kaitp1016 ]

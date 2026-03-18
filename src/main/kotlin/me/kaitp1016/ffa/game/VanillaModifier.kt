@@ -15,7 +15,7 @@ object VanillaModifier: Listener {
         Enchantment.SHARPNESS to 3,
         Enchantment.DENSITY to 2,
         Enchantment.BREACH to 2,
-        Enchantment.LUNGE to 1,
+        Enchantment.LUNGE to 2,
         Enchantment.POWER to 3,
     )
 
