@@ -29,7 +29,7 @@ object SpeedSkill: CustomItem() {
 
     const val COOLDOWN_TICK = 1800
     val COOLDOWN_IDENTIFIER = Identifier.parse("ffa:speed_skill_cooldown")
-    val SPEED_SKILL_MODIFIER = Identifier.parse("ffa:speed_skill_attribute_modifier")
+    val SPEED_SKILL_MODIFIER = Identifier.parse("ffa:w")
 
     override fun createItem(amount: Int): ItemStack {
         return super.createItem(amount).asCraftItemStack().handle.apply {

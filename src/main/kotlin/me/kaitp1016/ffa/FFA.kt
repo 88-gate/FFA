@@ -9,6 +9,7 @@ import me.kaitp1016.ffa.events.EventManager
 import me.kaitp1016.ffa.events.impl.UpdateActionBarEvent
 import me.kaitp1016.ffa.game.CombatTag
 import me.kaitp1016.ffa.game.ItemFramePreview
+import me.kaitp1016.ffa.game.KillStreak
 import me.kaitp1016.ffa.game.mining.Mining
 import me.kaitp1016.ffa.game.Revenge
 import me.kaitp1016.ffa.game.VanillaModifier
@@ -35,7 +36,7 @@ class FFA : JavaPlugin(), Listener {
     override fun onEnable() {
         plugin = this
 
-        listOf(EventManager,Scheduler, ItemEventPoster, PacketGuiManager, Revenge, CombatTag, VanillaModifier, ItemFramePreview, Mining, MiningActionBarHandler, TemporaryBlocks, this)
+        listOf(EventManager,Scheduler, ItemEventPoster, PacketGuiManager, Revenge, CombatTag, VanillaModifier, ItemFramePreview, Mining, MiningActionBarHandler, TemporaryBlocks, KillStreak, this)
             .forEach { server.pluginManager.registerEvents(it,plugin) }
 
         Settings
