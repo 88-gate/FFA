@@ -15,6 +15,7 @@ import me.kaitp1016.ffa.game.VanillaModifier
 import me.kaitp1016.ffa.game.mining.MiningActionBarHandler
 import me.kaitp1016.ffa.items.ItemManager
 import me.kaitp1016.ffa.items.events.ItemEventPoster
+import me.kaitp1016.ffa.items.impl.consumeable.TemporaryBlocks
 import me.kaitp1016.ffa.packetgui.PacketGuiManager
 import me.kaitp1016.ffa.setting.Settings
 import me.kaitp1016.ffa.utils.DatapackAPI.getMoney
@@ -34,7 +35,7 @@ class FFA : JavaPlugin(), Listener {
     override fun onEnable() {
         plugin = this
 
-        listOf(EventManager,Scheduler, ItemEventPoster, PacketGuiManager, Revenge, CombatTag, VanillaModifier, ItemFramePreview, Mining, MiningActionBarHandler, this)
+        listOf(EventManager,Scheduler, ItemEventPoster, PacketGuiManager, Revenge, CombatTag, VanillaModifier, ItemFramePreview, Mining, MiningActionBarHandler, TemporaryBlocks, this)
             .forEach { server.pluginManager.registerEvents(it,plugin) }
 
         Settings
