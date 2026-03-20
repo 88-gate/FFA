@@ -5,6 +5,7 @@ import me.kaitp1016.ffa.items.ItemCategory
 import me.kaitp1016.ffa.items.Rarity
 import me.kaitp1016.ffa.items.events.ItemEventHandler
 import me.kaitp1016.ffa.items.events.ItemEvents
+import me.kaitp1016.ffa.utils.DatapackAPI.getPrestige
 import me.kaitp1016.ffa.utils.NMSUtils.asCraftItemStack
 import me.kaitp1016.ffa.utils.NMSUtils.asCraftPlayer
 import me.kaitp1016.ffa.utils.NMSUtils.toMCComponent
@@ -55,6 +56,11 @@ object EnhancedSprintPack: CustomItem() {
         event.isCancelled = true
         val player = event.player
         if (player.hasCooldown(event.item)) return
+
+        if (player.asCraftPlayer().handle.getPrestige() < 1) {
+            player.sendMessage("このアイテムを使用するには Prestige 1以上が必要です!")
+            return
+        }
 
         player.addPotionEffect(PotionEffect(PotionEffectType.SPEED,100,2))
         player.world.playSound(player.location, Sound.BLOCK_AMETHYST_BLOCK_PLACE,2f,0.9f)

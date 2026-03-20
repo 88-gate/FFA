@@ -97,7 +97,7 @@ object TemporaryBlocks: Listener {
         const val BLOCK_DISAPPER_TICK = 1200
 
         override fun onUse(player: ServerPlayer): Boolean {
-            if (player.getPrestige() < 3) {
+            if (player.getPrestige() < 4) {
                 player.sendSystemMessage(Component.literal("このアイテムを使用するには Prestige 4以上が必要です!"))
                 return false
             }
