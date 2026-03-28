@@ -2,7 +2,7 @@ package me.kaitp1016.ffa.items.events
 
 import com.destroystokyo.paper.event.player.PlayerLaunchProjectileEvent
 import me.kaitp1016.ffa.events.impl.TickEvent
-import me.kaitp1016.ffa.items.ItemManager.isBattleRoyalItem
+import me.kaitp1016.ffa.items.ItemManager.isCustomItem
 import me.kaitp1016.ffa.utils.NMSUtils.asCraftDamageSource
 import me.kaitp1016.ffa.utils.NMSUtils.asCraftPlayer
 import org.bukkit.Bukkit
@@ -28,13 +28,13 @@ object ItemEventPoster: Listener {
         when (event.action) {
             Action.LEFT_CLICK_AIR, Action.LEFT_CLICK_BLOCK -> {
                 val item = event.item
-                if (item == null || !item.isBattleRoyalItem()) return
+                if (item == null || !item.isCustomItem()) return
 
                 ItemEvents.SwingEvent(item,event.player,event).post()
             }
             Action.RIGHT_CLICK_AIR, Action.RIGHT_CLICK_BLOCK -> {
                 val item = event.item
-                if (item == null || !item.isBattleRoyalItem()) return
+                if (item == null || !item.isCustomItem()) return
 
                 val itemEvent = ItemEvents.UseEvent(item,event.player,event)
                 itemEvent.post()
@@ -50,7 +50,7 @@ object ItemEventPoster: Listener {
     @EventHandler
     fun onConsume(event: PlayerItemConsumeEvent) {
         val item = event.item
-        if (!item.isBattleRoyalItem()) return
+        if (!item.isCustomItem()) return
 
         val itemEvent = ItemEvents.ConsumeEvent(item,event.player,event)
         itemEvent.post()
@@ -67,7 +67,7 @@ object ItemEventPoster: Listener {
         if (player !is Player) return
 
         val item = player.inventory.itemInMainHand
-        if (!item.isBattleRoyalItem()) return
+        if (!item.isCustomItem()) return
 
         val itemEvent = ItemEvents.DamageEntityEvent(item,player,event)
         itemEvent.post()
@@ -83,7 +83,7 @@ object ItemEventPoster: Listener {
         if (player !is Player) return
 
         player.inventory.armorContents.forEach {item ->
-            if (item?.isBattleRoyalItem() != true) return@forEach
+            if (item?.isCustomItem() != true) return@forEach
             val itemEvent = ArmorEvents.DamageEvent(item,player,event)
             itemEvent.post()
 
@@ -93,7 +93,7 @@ object ItemEventPoster: Listener {
         }
 
         val usingItem = player.asCraftPlayer().handle.useItem.bukkitStack
-        if (usingItem.isBattleRoyalItem()) {
+        if (usingItem.isCustomItem()) {
             val itemEvent = ItemEvents.DamageWhileUsingEvent(usingItem,player,event)
             itemEvent.post()
 
@@ -111,7 +111,7 @@ object ItemEventPoster: Listener {
         if (player !is Player) return
 
         val item = source.weaponItem?.bukkitStack ?: return
-        if (!item.isBattleRoyalItem()) return
+        if (!item.isCustomItem()) return
 
         val itemEvent = ItemEvents.KillEvent(item,player,source,event)
         itemEvent.post()
@@ -126,7 +126,7 @@ object ItemEventPoster: Listener {
         val player = event.player
 
         val item = event.player.inventory.itemInMainHand
-        if (!item.isBattleRoyalItem()) return
+        if (!item.isCustomItem()) return
 
         val itemEvent = ItemEvents.BlockDropItemEven(item,player,event)
         itemEvent.post()
@@ -141,7 +141,7 @@ object ItemEventPoster: Listener {
         val player = event.player
         val item = event.itemInHand
 
-        if (!item.isBattleRoyalItem()) return
+        if (!item.isCustomItem()) return
 
         val itemEvent = ItemEvents.BlockPlaceEvent(item,player,event)
         itemEvent.post()
@@ -157,7 +157,7 @@ object ItemEventPoster: Listener {
         val hand = event.hand ?: return
         val item = player.inventory.getItem(hand)
 
-        if (!item.isBattleRoyalItem()) return
+        if (!item.isCustomItem()) return
 
         val itemEvent = ItemEvents.FishEvent(item,player,event)
         itemEvent.post()
@@ -171,7 +171,7 @@ object ItemEventPoster: Listener {
     fun onShoot(event: EntityShootBowEvent) {
         val item = event.bow
         val player = event.entity
-        if (player !is Player || item == null || !item.isBattleRoyalItem()) return
+        if (player !is Player || item == null || !item.isCustomItem()) return
 
         val itemEvent = ItemEvents.ShootEvent(item,player,event)
         itemEvent.post()
@@ -201,7 +201,7 @@ object ItemEventPoster: Listener {
     fun onTick(event: TickEvent) {
         Bukkit.getOnlinePlayers().forEach{player ->
             val item = player.inventory.itemInMainHand
-            if (!item.isBattleRoyalItem()) return@forEach
+            if (!item.isCustomItem()) return@forEach
 
             ItemEvents.TickWhileHolding(item,player).post()
         }
@@ -214,7 +214,7 @@ object ItemEventPoster: Listener {
         if (player !is Player) return
 
         val cursor = event.cursor
-        if (cursor.isBattleRoyalItem()) {
+        if (cursor.isCustomItem()) {
             val itemEvent = ItemEvents.SwapItemInInventoryEvent(cursor,player,event)
             itemEvent.post()
 
@@ -224,7 +224,7 @@ object ItemEventPoster: Listener {
         }
 
         val item = event.currentItem
-        if (item != null && item.isBattleRoyalItem()) {
+        if (item != null && item.isCustomItem()) {
             val itemEvent = ItemEvents.ClickItemInInventoryEvent(item,player,event)
             itemEvent.post()
 

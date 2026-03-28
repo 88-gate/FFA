@@ -4,7 +4,7 @@ import me.kaitp1016.ffa.events.impl.TickEvent
 import me.kaitp1016.ffa.events.impl.UpdateActionBarEvent
 import me.kaitp1016.ffa.items.CustomItem
 import me.kaitp1016.ffa.items.ItemCategory
-import me.kaitp1016.ffa.items.ItemManager.getBattleRoyalItemID
+import me.kaitp1016.ffa.items.ItemManager.getCustomItemID
 import me.kaitp1016.ffa.items.Rarity
 import me.kaitp1016.ffa.items.events.ItemEventHandler
 import me.kaitp1016.ffa.items.events.ItemEvents
@@ -98,7 +98,7 @@ object GrapplingHook: CustomItem(), Listener {
         val player = event.player
         val uuid = player.uniqueId
         val cooldown = cooldowns.find { it.uuid == uuid }
-        if (cooldown == null || player.inventory.itemInMainHand.getBattleRoyalItemID() != this.id ) return
+        if (cooldown == null || player.inventory.itemInMainHand.getCustomItemID() != this.id ) return
 
         event.addText("§5Grappling Hook§7: §9${cooldown.cooldown / 20}秒")
     }

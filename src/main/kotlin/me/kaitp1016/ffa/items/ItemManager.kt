@@ -40,15 +40,15 @@ object ItemManager {
         return ++nextInternalId
     }
 
-    fun ItemStack.getBattleRoyalItemID(): String? {
+    fun ItemStack.getCustomItemID(): String? {
         return this.persistentDataContainer.get(NAMESPACED_KEY_ITEM_ID, PersistentDataType.STRING)
     }
 
-    fun ItemStack.getBattleRoyalItem(): CustomItem? {
+    fun ItemStack.getCustomItem(): CustomItem? {
         return itemIdMap[this.persistentDataContainer.get(NAMESPACED_KEY_ITEM_ID, PersistentDataType.STRING)]
     }
 
-    fun ItemStack.isBattleRoyalItem(): Boolean {
+    fun ItemStack.isCustomItem(): Boolean {
         return this.persistentDataContainer.has(NAMESPACED_KEY_ITEM_ID, PersistentDataType.STRING)
     }
 }

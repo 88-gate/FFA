@@ -1,6 +1,6 @@
 package me.kaitp1016.ffa.items.events
 
-import me.kaitp1016.ffa.items.ItemManager.getBattleRoyalItem
+import me.kaitp1016.ffa.items.ItemManager.getCustomItem
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
@@ -14,7 +14,7 @@ abstract class ItemEvent {
     }
 
     fun post() {
-        val battleRoyalItem = item.getBattleRoyalItem()
+        val battleRoyalItem = item.getCustomItem()
         if (battleRoyalItem == null) return
 
         ItemEventManager.post(this, battleRoyalItem.internalId)

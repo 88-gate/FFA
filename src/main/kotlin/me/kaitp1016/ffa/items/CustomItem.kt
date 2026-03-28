@@ -1,7 +1,7 @@
 package me.kaitp1016.ffa.items
 
-import me.kaitp1016.ffa.items.ItemManager.getBattleRoyalItemID
-import me.kaitp1016.ffa.items.ItemManager.isBattleRoyalItem
+import me.kaitp1016.ffa.items.ItemManager.getCustomItemID
+import me.kaitp1016.ffa.items.ItemManager.isCustomItem
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.Style
@@ -94,19 +94,19 @@ abstract class CustomItem {
         val inventory = player.inventory
 
         val mainHand = inventory.itemInMainHand
-        if (mainHand.isBattleRoyalItem() && mainHand.getBattleRoyalItemID() == this.id && mainHand.amount >= amount) {
+        if (mainHand.isCustomItem() && mainHand.getCustomItemID() == this.id && mainHand.amount >= amount) {
             mainHand.amount--
             return true
         }
 
         val offHand = inventory.itemInOffHand
-        if (offHand.isBattleRoyalItem() && offHand.getBattleRoyalItemID() == this.id && offHand.amount >= amount) {
+        if (offHand.isCustomItem() && offHand.getCustomItemID() == this.id && offHand.amount >= amount) {
             offHand.amount--
             return true
         }
 
         inventory.forEach { item ->
-            if (item.isBattleRoyalItem() && item.getBattleRoyalItemID() == this.id && item.amount >= amount) {
+            if (item.isCustomItem() && item.getCustomItemID() == this.id && item.amount >= amount) {
                 item.amount--
                 return true
             }

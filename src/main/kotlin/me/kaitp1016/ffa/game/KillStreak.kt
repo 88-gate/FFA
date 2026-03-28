@@ -26,19 +26,20 @@ object KillStreak: Listener {
             val killStreak = killStreaks[playerUUID]!!
             if (killStreak.bounty > 0) {
                 if (killer == null) {
-                    Bukkit.broadcast(Component.text("§5§l⚔賞金首 §r").append(player.name().color(NamedTextColor.YELLOW).append(Component.text(" は死んでしまった! §e§l${killStreak.streak} Kill Streak §r§cを失った!"))))
+                    Bukkit.broadcast(Component.text("§5§l⚔賞金首 §r").append(player.name().color(NamedTextColor.YELLOW).append(Component.text(" §cは死んでしまった! §e§l${killStreak.streak} Kill Streak §r§cを失った!"))))
                 }
                 else {
-                    Bukkit.broadcast(Component.text("§5§l⚔賞金首 §r").append(killer.name().color(NamedTextColor.YELLOW).append(Component.text(" は §e").append(player.name()).append(Component.text(" §cの §b§l${killStreak.streak} Kill Streak §r§cを終わらせた! ")))))
+                    Bukkit.broadcast(Component.text("§5§l⚔賞金首 §r").append(killer.name().color(NamedTextColor.YELLOW).append(Component.text(" §cは §e").append(player.name()).append(Component.text(" §cの §b§l${killStreak.streak} Kill Streak §r§cを終わらせた! ")))))
                 }
             }
+
+            killStreaks.remove(playerUUID)
         }
 
-        if (killer == null) return
+        if (killer == null || killer.name == "combatffas" || killer.name == "combatffa") return
 
         val streak = killStreaks.getOrPut(killer.uniqueId) { KillStreak(0) }
         streak.streak++
-
 
         if (streak.streak % 25 == 0) {
             player.isGlowing = true

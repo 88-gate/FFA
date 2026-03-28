@@ -1,8 +1,8 @@
 package me.kaitp1016.ffa.utils
 
 import me.kaitp1016.ffa.items.CustomItem
-import me.kaitp1016.ffa.items.ItemManager.getBattleRoyalItem
-import me.kaitp1016.ffa.items.ItemManager.isBattleRoyalItem
+import me.kaitp1016.ffa.items.ItemManager.getCustomItem
+import me.kaitp1016.ffa.items.ItemManager.isCustomItem
 import me.kaitp1016.ffa.utils.NMSUtils.asCraftItemStack
 import me.kaitp1016.ffa.utils.NMSUtils.toMCComponent
 import net.kyori.adventure.text.Component
@@ -235,8 +235,8 @@ object RecipeUtils {
     }
 
     fun getRecipe(item: org.bukkit.inventory.ItemStack):List<RecipeData> {
-        if (item.isBattleRoyalItem()) {
-            return getRecipe(item.getBattleRoyalItem()!!)
+        if (item.isCustomItem()) {
+            return getRecipe(item.getCustomItem()!!)
         }
         else {
             return getRecipe(item.type)
@@ -258,7 +258,7 @@ object RecipeUtils {
 
     fun getRecipe(item: CustomItem): List<RecipeData> {
         return recipes.mapNotNull { recipe ->
-            if (!this.isSupported(recipe) || recipe.result.getBattleRoyalItem() != item) return@mapNotNull null
+            if (!this.isSupported(recipe) || recipe.result.getCustomItem() != item) return@mapNotNull null
 
             val data = getRecipeData(recipe)
             return@mapNotNull data
@@ -289,7 +289,7 @@ object RecipeUtils {
         }
 
         override fun test(item: org.bukkit.inventory.ItemStack): Boolean {
-            return item.isBattleRoyalItem() && item.getBattleRoyalItem() == this.item
+            return item.isCustomItem() && item.getCustomItem() == this.item
         }
     }
 }

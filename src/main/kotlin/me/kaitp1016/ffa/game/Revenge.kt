@@ -48,6 +48,8 @@ object Revenge: Listener {
             }
         }
 
+        if (player.name == "combatffas" || player.name == "combatffa") return
+
         revenges.removeAll { it.player.uniqueId == player.uniqueId || it.killer.uniqueId == player.uniqueId }
         revenges.add(RevengeTarget(player,killer, Settings.REVENGE_EXPIRE_TIME.getValue()))
 

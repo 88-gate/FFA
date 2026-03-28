@@ -1,7 +1,7 @@
 package me.kaitp1016.ffa.game
 
-import me.kaitp1016.ffa.items.ItemManager.getBattleRoyalItem
-import me.kaitp1016.ffa.items.ItemManager.isBattleRoyalItem
+import me.kaitp1016.ffa.items.ItemManager.getCustomItem
+import me.kaitp1016.ffa.items.ItemManager.isCustomItem
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -32,8 +32,8 @@ object VanillaModifier: Listener {
 
         val item = event.item
 
-        if (item.isBattleRoyalItem()) {
-            val battleRoyalItem = item.getBattleRoyalItem()!!
+        if (item.isCustomItem()) {
+            val battleRoyalItem = item.getCustomItem()!!
 
             if (!battleRoyalItem.isEnchantable) {
                 event.isCancelled = true
@@ -74,8 +74,8 @@ object VanillaModifier: Listener {
             }
         }
 
-        if (item.isBattleRoyalItem()) {
-            val battleRoyalItem = item.getBattleRoyalItem()!!
+        if (item.isCustomItem()) {
+            val battleRoyalItem = item.getCustomItem()!!
 
             if (!battleRoyalItem.isEnchantable) {
                 event.view.repairCost = Int.MAX_VALUE
