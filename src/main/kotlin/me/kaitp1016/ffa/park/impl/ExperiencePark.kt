@@ -11,9 +11,9 @@ import org.bukkit.event.entity.EntityDeathEvent
 class ExperiencePark: Park() {
     override val icon = ItemStack(Items.EXPERIENCE_BOTTLE)
     override val name = "Experience"
-    override val cost = 5000
+    override val cost = 15000
     override val description = listOf(
-        "プレイヤーを倒したら追加で経験値を落とすようになる.",
+        "プレイヤーを倒したら追加で経験値を落とすようになる。",
     )
 
     override fun onKill(player: Player, event: EntityDeathEvent) {

@@ -1,7 +1,9 @@
 package me.kaitp1016.ffa.park
 
+import io.papermc.paper.event.entity.EntityKnockbackEvent
 import me.kaitp1016.ffa.plugin
 import net.minecraft.world.item.ItemStack
+import org.bukkit.attribute.Attribute
 import org.bukkit.entity.Player
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageByEntityEvent
@@ -30,5 +32,13 @@ abstract class Park {
 
     open fun onDamage(player: Player, event: EntityDamageEvent) {
 
+    }
+
+    open fun onKnockback(player: Player,event: EntityKnockbackEvent) {
+
+    }
+
+    open fun getAttributes(): List<Pair<Attribute, Double>> {
+        return emptyList()
     }
 }

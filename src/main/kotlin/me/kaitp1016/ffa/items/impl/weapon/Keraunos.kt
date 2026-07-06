@@ -6,7 +6,6 @@ import me.kaitp1016.ffa.items.Rarity
 import me.kaitp1016.ffa.items.events.ItemEventHandler
 import me.kaitp1016.ffa.items.events.ItemEvents
 import me.kaitp1016.ffa.utils.NMSUtils.toMC
-import me.kaitp1016.ffa.utils.NMSUtils.toMCCopy
 import me.kaitp1016.ffa.utils.Scheduler
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.Identifier
@@ -69,7 +68,7 @@ object Keraunos: CustomItem(), Listener {
             this.set(DataComponents.ITEM_MODEL, Identifier.parse("minecraft:trident"))
             this.set(DataComponents.UNBREAKABLE, Unit.INSTANCE)
         }.bukkitStack.apply {
-            this.addEnchantment(Enchantment.LOYALTY,3)
+            this.addEnchantment(Enchantment.LOYALTY, 3)
         }
     }
 
@@ -79,22 +78,21 @@ object Keraunos: CustomItem(), Listener {
 
         val player = event.player.toMC()
         val level = player.level()
-        val item = event.bukkitEvent.itemStack.toMCCopy()
+        val item = event.bukkitEvent.itemStack.toMC()
 
         event.isCancelled = true
 
         player.cooldowns.addCooldown(cooldownLocation, COOLDOWN.toInt() * 20)
-        event.player.playSound(event.player, Sound.ITEM_TRIDENT_THROW,1f,1f)
+        event.player.playSound(event.player, Sound.ITEM_TRIDENT_THROW, 1f, 1f)
 
-        val thrownKeraunos = Projectile.spawnProjectileFromRotationDelayed(ThrownKeraunos::new,level,item,player, 0f, 2.5f, 1.0f)
+        val thrownKeraunos = Projectile.spawnProjectileFromRotationDelayed(ThrownKeraunos::new, level, item, player, 0f, 2.5f, 1.0f)
         if (thrownKeraunos.attemptSpawn()) {
             thrownKeraunos.projectile().apply {
                 this.pickupItemStack = item
 
                 if (player.hasInfiniteMaterials()) {
                     this.pickup = AbstractArrow.Pickup.CREATIVE_ONLY
-                }
-                else {
+                } else {
                     player.inventory.removeItem(item)
                 }
             }
@@ -108,7 +106,7 @@ object Keraunos: CustomItem(), Listener {
         }
     }
 
-    class ThrownKeraunos: ThrownTrident {
+    class ThrownKeraunos : ThrownTrident {
         var spawned = false
 
         constructor(level: Level, shooter: LivingEntity, pickupItem: net.minecraft.world.item.ItemStack) : super(level, shooter, pickupItem) {
@@ -136,11 +134,11 @@ object Keraunos: CustomItem(), Listener {
 
             repeat(THUNDER_AMOUNTS) {
                 Scheduler.scheduleTask(it) {
-                    val offsetX = Random.nextDouble(-THUNDER_SPREAD_DISTANCE,THUNDER_SPREAD_DISTANCE)
-                    val offsetZ = Random.nextDouble(-THUNDER_SPREAD_DISTANCE,THUNDER_SPREAD_DISTANCE)
+                    val offsetX = Random.nextDouble(-THUNDER_SPREAD_DISTANCE, THUNDER_SPREAD_DISTANCE)
+                    val offsetZ = Random.nextDouble(-THUNDER_SPREAD_DISTANCE, THUNDER_SPREAD_DISTANCE)
 
-                    val thunder = KeraunosLightningBolt(EntityType.LIGHTNING_BOLT,level()).apply {
-                        this.setPos(pos.add(offsetX,0.0,offsetZ))
+                    val thunder = KeraunosLightningBolt(EntityType.LIGHTNING_BOLT, level()).apply {
+                        this.setPos(pos.add(offsetX, 0.0, offsetZ))
                         this.flashes = 1
                     }
 
@@ -155,8 +153,8 @@ object Keraunos: CustomItem(), Listener {
             }
         }
 
-        class KeraunosLightningBolt: LightningBolt {
-            constructor(type: EntityType<out LightningBolt>,level: Level):super(type,level) {
+        class KeraunosLightningBolt : LightningBolt {
+            constructor(type: EntityType<out LightningBolt>, level: Level) : super(type, level) {
 
             }
         }

@@ -3,6 +3,7 @@ package me.kaitp1016.ffa.park.gui
 import me.kaitp1016.ffa.mc
 import me.kaitp1016.ffa.packetgui.AbstractPacketGui
 import me.kaitp1016.ffa.packetgui.ChestPacketGui
+import me.kaitp1016.ffa.park.AttributeParkHandler
 import me.kaitp1016.ffa.park.Park
 import me.kaitp1016.ffa.park.ParkManager
 import me.kaitp1016.ffa.park.Parks
@@ -78,6 +79,7 @@ class ParkSelectGui: ChestPacketGui {
             this.park.selectedParks[index] = park
             player.connection.send(ClientboundSoundPacket(Holder.direct(SoundEvents.EXPERIENCE_ORB_PICKUP), SoundSource.MASTER, player.x, player.y, player.z, 1f, 1f, 1L))
             openParent()
+            AttributeParkHandler.update(player.bukkitEntity)
         }
     }
 

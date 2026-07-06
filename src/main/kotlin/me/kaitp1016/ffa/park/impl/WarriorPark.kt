@@ -10,7 +10,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent
 class WarriorPark: Park() {
     override val icon = ItemStack(Items.STONE_SWORD)
     override val name = "Warrior"
-    override val cost = 100
+    override val cost = 2500
     override val description = listOf(
         "与える近接ダメージが1.1倍になる。",
     )

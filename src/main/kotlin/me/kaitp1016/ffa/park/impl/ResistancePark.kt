@@ -3,27 +3,23 @@ package me.kaitp1016.ffa.park.impl
 import me.kaitp1016.ffa.park.Park
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
-import org.bukkit.damage.DamageType
 import org.bukkit.entity.Player
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDamageEvent
 
-class ArcherPark: Park() {
-    override val icon = ItemStack(Items.BOW)
-    override val name = "Archer"
-    override val cost = 3000
+class ResistancePark: Park() {
+    override val icon = ItemStack(Items.IRON_INGOT)
+    override val name = "Tank"
+    override val cost = 5000
     override val description = listOf(
-        "矢の与えるダメージが1.2倍になる。",
-        "受けるダメージが1.5倍になる。",
+        "全ての受けるダメージと与えるダメージが0.7倍になる。",
     )
 
     override fun onHit(player: Player, event: EntityDamageByEntityEvent) {
-        if (event.damageSource.damageType == DamageType.ARROW) {
-            event.damage *= 1.2
-        }
+        event.damage *= 0.7
     }
 
     override fun onDamage(player: Player, event: EntityDamageEvent) {
-        event.damage *= 1.5
+        event.damage *= 0.7
     }
 }

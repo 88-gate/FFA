@@ -16,7 +16,7 @@ object ParkManager: Listener {
     data class PlayerPark(val uuid: UUID, var unlockedSlots: Int, val unlockedParks: MutableList<Park>, val selectedParks: MutableList<Park>) {
         companion object {
             fun default(player: UUID): PlayerPark {
-                return PlayerPark(player,0,mutableListOf(Parks.EMPTY),mutableListOf())
+                return PlayerPark(player, 0, mutableListOf(Parks.EMPTY), mutableListOf())
             }
         }
     }
@@ -28,7 +28,7 @@ object ParkManager: Listener {
     }
 
     fun getUnlockCost(index: Int): Int {
-        return index * index * 1000
+        return index * index * 2000
     }
 
     @EventHandler
@@ -67,10 +67,10 @@ object ParkManager: Listener {
 
         playerParks.forEach { (uuid, player) ->
             val park = JsonObject()
-            park.addProperty("uuid",player.uuid.toString())
-            park.addProperty("unlocked_slots",player.unlockedSlots)
-            park.add("unlocked_parks", JsonArray().also { array -> player.unlockedParks.forEach { array.add(Parks.getId(it)) }})
-            park.add("selected_parks", JsonArray().also { array -> player.selectedParks.forEach { array.add(Parks.getId(it)) }})
+            park.addProperty("uuid", player.uuid.toString())
+            park.addProperty("unlocked_slots", player.unlockedSlots)
+            park.add("unlocked_parks", JsonArray().also { array -> player.unlockedParks.forEach { array.add(Parks.getId(it)) } })
+            park.add("selected_parks", JsonArray().also { array -> player.selectedParks.forEach { array.add(Parks.getId(it)) } })
 
             json.add(uuid.toString(), park)
         }

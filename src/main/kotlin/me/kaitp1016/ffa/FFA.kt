@@ -108,6 +108,8 @@ class FFA : JavaPlugin(), Listener {
     }
 }
 
+const val PLUGIN_ID = "ffa"
+
 lateinit var plugin: JavaPlugin
     private set
 
