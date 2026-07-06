@@ -4,8 +4,7 @@ import it.unimi.dsi.fastutil.ints.IntList
 import me.kaitp1016.ffa.events.impl.TickEvent
 import me.kaitp1016.ffa.plugin
 import me.kaitp1016.ffa.utils.DatapackAPI.addMoney
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftPlayer
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftWorld
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponents
 import net.minecraft.world.entity.EquipmentSlot
@@ -66,7 +65,7 @@ object Mining: Listener {
         event.isCancelled = true
         val reward = data.money()
 
-        val mcPlayer = player.asCraftPlayer().handle
+        val mcPlayer = player.toMC()
         mcPlayer.mainHandItem.hurtAndBreak(1,mcPlayer, EquipmentSlot.MAINHAND)
         mcPlayer.addMoney(reward)
 
@@ -79,7 +78,7 @@ object Mining: Listener {
             minedPos.add(MinedPos(pos, world, block.type, chest, data.respawnTick))
             world.setBlockData(block.x, block.y, block.z, Material.CHEST.createBlockData())
 
-            val level = world.asCraftWorld().handle
+            val level = world.toMC()
             val item = ItemStack(Items.FIREWORK_ROCKET).apply {
                 this.set(DataComponents.FIREWORKS, Fireworks(1,listOf(FireworkExplosion(FireworkExplosion.Shape.STAR, IntList.of(255,255,255),IntList.of(0,255,255),true,false))))
             }
@@ -117,7 +116,7 @@ object Mining: Listener {
         if (pos == null) return
 
         event.isCancelled = true
-        pos.chest!!.openContainer(event.player.asCraftPlayer().handle)
+        pos.chest!!.openContainer(event.player.toMC())
     }
 
     @EventHandler

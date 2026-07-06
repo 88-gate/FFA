@@ -2,7 +2,8 @@ package me.kaitp1016.ffa.game.mining
 
 import me.kaitp1016.ffa.events.impl.TickEvent
 import me.kaitp1016.ffa.events.impl.UpdateActionBarEvent
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftBlock
+import me.kaitp1016.ffa.utils.NMSUtils.toCraft
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.contents.objects.AtlasSprite
 import net.minecraft.resources.Identifier
@@ -21,7 +22,7 @@ object MiningActionBarHandler: Listener {
         datas.remove(original)
 
         val stroke = original?.stroke?.plus(1) ?: 1
-        val atlas = createAtlas(block.asCraftBlock().nms)
+        val atlas = createAtlas(block.toMC())
         val text = Component.literal("§7⛏").append(Component.`object`(atlas).append(Component.literal(" §e+${reward} §7(§a§l$stroke§7)")))
 
         datas.add(ActionBarData(player,text,stroke = stroke))

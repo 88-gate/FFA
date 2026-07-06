@@ -18,9 +18,11 @@ import me.kaitp1016.ffa.items.ItemManager
 import me.kaitp1016.ffa.items.events.ItemEventPoster
 import me.kaitp1016.ffa.items.impl.consumeable.TemporaryBlocks
 import me.kaitp1016.ffa.packetgui.PacketGuiManager
+import me.kaitp1016.ffa.park.ParkListener
+import me.kaitp1016.ffa.park.ParkManager
 import me.kaitp1016.ffa.setting.Settings
 import me.kaitp1016.ffa.utils.DatapackAPI.getMoney
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftPlayer
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import me.kaitp1016.ffa.utils.RecipeUtils
 import me.kaitp1016.ffa.utils.Scheduler
 import net.minecraft.network.protocol.common.ClientboundServerLinksPacket
@@ -36,8 +38,22 @@ class FFA : JavaPlugin(), Listener {
     override fun onEnable() {
         plugin = this
 
-        listOf(EventManager,Scheduler, ItemEventPoster, PacketGuiManager, Revenge, CombatTag, VanillaModifier, ItemFramePreview, Mining, MiningActionBarHandler, TemporaryBlocks, KillStreak, this)
-            .forEach { server.pluginManager.registerEvents(it,plugin) }
+        listOf(EventManager,
+            Scheduler,
+            ItemEventPoster,
+            PacketGuiManager,
+            Revenge,
+            CombatTag,
+            VanillaModifier,
+            ItemFramePreview,
+            Mining,
+            MiningActionBarHandler,
+            TemporaryBlocks,
+            KillStreak,
+            ParkManager,
+            ParkListener,
+            this,
+        ).forEach { server.pluginManager.registerEvents(it,plugin) }
 
         Settings
         ItemManager.registeAll()
@@ -66,7 +82,7 @@ class FFA : JavaPlugin(), Listener {
 
     @EventHandler
     fun onPlayerJoin(event: PlayerJoinEvent) {
-        val player = event.player.asCraftPlayer().handle
+        val player = event.player.toMC()
 
         player.connection.send(
             ClientboundServerLinksPacket(
@@ -86,7 +102,7 @@ class FFA : JavaPlugin(), Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     fun onActionBar(event: UpdateActionBarEvent) {
         val player = event.player
-        val money = player.asCraftPlayer().handle.getMoney()
+        val money = player.toMC().getMoney()
 
         event.addText("§a現在のポイント§7: §b${money}")
     }

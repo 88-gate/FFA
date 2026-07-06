@@ -2,7 +2,6 @@ package me.kaitp1016.ffa.utils
 
 import me.kaitp1016.ffa.mc
 import net.minecraft.network.chat.Component
-import net.minecraft.server.commands.ScoreboardCommand
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.scores.ScoreHolder
 import net.minecraft.world.scores.criteria.ObjectiveCriteria

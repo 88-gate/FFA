@@ -6,8 +6,7 @@ import me.kaitp1016.ffa.items.events.ItemEventHandler
 import me.kaitp1016.ffa.items.events.ItemEvents
 import me.kaitp1016.ffa.items.ItemCategory
 import me.kaitp1016.ffa.plugin
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftItemStack
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftPlayer
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.Identifier
@@ -34,7 +33,7 @@ object RandomCookie: CustomItem() {
     override val category = ItemCategory.CONSUMEABLE
 
     override fun createItem(amount: Int): ItemStack {
-        return super.createItem(amount).asCraftItemStack().handle.apply {
+        return super.createItem(amount).toMC().apply {
             this.set(DataComponents.FOOD, FoodProperties(4,4f,true))
             this.set(DataComponents.CONSUMABLE, Consumable(3f, ItemUseAnimation.EAT, Holder.direct(SoundEvents.PLAYER_BURP),false,listOf()))
             this.set(DataComponents.USE_COOLDOWN, UseCooldown(10f, Optional.of(Identifier.parse("ffa:random_cookie_cooldown"))))
@@ -51,7 +50,7 @@ object RandomCookie: CustomItem() {
             else -> throw IllegalStateException()
         }
 
-        event.player.asCraftPlayer().handle.addEffect(effect)
+        event.player.toMC().addEffect(effect)
     }
 
     override fun getRecipes(): List<Recipe>? {

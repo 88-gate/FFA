@@ -5,8 +5,7 @@ import me.kaitp1016.ffa.items.ItemCategory
 import me.kaitp1016.ffa.items.Rarity
 import me.kaitp1016.ffa.items.events.ItemEventHandler
 import me.kaitp1016.ffa.items.events.ItemEvents
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftItemStack
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftPlayer
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import me.kaitp1016.ffa.utils.Scheduler
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
@@ -30,8 +29,8 @@ object TrippleBow: CustomItem() {
 
     @ItemEventHandler
     fun onShoot(event: ItemEvents.ShootEvent) {
-        val player = event.player.asCraftPlayer().handle
-        val weapon = event.bukkitEvent.bow!!.asCraftItemStack().handle
+        val player = event.player.toMC()
+        val weapon = event.bukkitEvent.bow!!.toMC()
 
         val pickupItem = player.getProjectile(weapon)
         if (pickupItem.isEmpty) return

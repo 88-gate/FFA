@@ -3,11 +3,10 @@ package me.kaitp1016.ffa.packetgui.impl
 import me.kaitp1016.ffa.items.ItemManager
 import me.kaitp1016.ffa.packetgui.AbstractPacketGui
 import me.kaitp1016.ffa.packetgui.ChestPacketGui
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftItemStack
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import me.kaitp1016.ffa.utils.NMSUtils.toMCComponent
 import net.kyori.adventure.text.Component
 import net.minecraft.core.component.DataComponents
-import net.minecraft.network.protocol.game.ClientboundSetPlayerInventoryPacket
 import net.minecraft.network.protocol.game.ServerboundContainerClickPacket
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.item.ItemStack
@@ -52,7 +51,7 @@ class ItemListGui: ChestPacketGui {
                     }
 
                     val slot = player.inventory.freeSlot
-                    player.inventory.add(item.createItem(1).asCraftItemStack().handle)
+                    player.inventory.add(item.createItem(1).toMC())
                     player.connection.send(player.inventory.createInventoryUpdatePacket(slot))
                     player.sendSystemMessage(Component.text("§e${item.name} §rを受け取りました。").toMCComponent())
                 }
@@ -72,7 +71,7 @@ class ItemListGui: ChestPacketGui {
             }
             else {
                 val item = itemList[index]
-                this.setItem(slot, item.createItem(1).asCraftItemStack().handle)
+                this.setItem(slot, item.createItem(1).toMC())
             }
 
             slot++

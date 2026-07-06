@@ -5,8 +5,7 @@ import me.kaitp1016.ffa.items.ItemCategory
 import me.kaitp1016.ffa.items.Rarity
 import me.kaitp1016.ffa.items.events.ItemEventHandler
 import me.kaitp1016.ffa.items.events.ItemEvents
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftItemStack
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftPlayer
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import me.kaitp1016.ffa.utils.Scheduler
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.Identifier
@@ -41,7 +40,7 @@ object Pratidhvani: CustomItem() {
     val cooldownLocation = Identifier.parse("ffa:pratidhvani_cooldown")
 
     override fun createItem(amount: Int): ItemStack {
-        return super.createItem(amount).asCraftItemStack().handle.apply {
+        return super.createItem(amount).toMC().apply {
             this.set(DataComponents.USE_COOLDOWN, UseCooldown(COOLDOWN, Optional.of(cooldownLocation)))
             this.set(
                 DataComponents.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers(
@@ -61,9 +60,9 @@ object Pratidhvani: CustomItem() {
 
     @ItemEventHandler
     fun onUse(event: ItemEvents.UseEvent) {
-        val item = event.item.asCraftItemStack().handle
+        val item = event.item.toMC()
         val player = event.player
-        val mcPlayer = player.asCraftPlayer().handle
+        val mcPlayer = player.toMC()
 
         if (mcPlayer.cooldowns.isOnCooldown(item)) return
         mcPlayer.cooldowns.addCooldown(cooldownLocation, COOLDOWN.toInt() * 20)

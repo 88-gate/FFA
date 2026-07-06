@@ -5,8 +5,7 @@ import me.kaitp1016.ffa.items.ItemCategory
 import me.kaitp1016.ffa.items.Rarity
 import me.kaitp1016.ffa.items.events.ItemEventHandler
 import me.kaitp1016.ffa.items.events.ItemEvents
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftItemStack
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftPlayer
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import net.minecraft.world.entity.EquipmentSlot
 import org.bukkit.Material
 import org.bukkit.Particle
@@ -34,7 +33,7 @@ object BeamSword: CustomItem() {
         location.add(0.0,player.eyeHeight,0.0)
         player.world.playSound(player.location, Sound.ITEM_DYE_USE,2f,2f)
 
-        event.item.asCraftItemStack().handle.hurtAndBreak(1,player.asCraftPlayer().handle, EquipmentSlot.MAINHAND)
+        event.item.toMC().hurtAndBreak(1,player.toMC(), EquipmentSlot.MAINHAND)
 
         var shouldBreak = false
 
@@ -51,7 +50,7 @@ object BeamSword: CustomItem() {
                 val entity = this as? LivingEntity ?: return@run
                 entity.damage(BEAM_DAMAGE,player)
 
-                event.item.asCraftItemStack().handle.hurtAndBreak(1,player.asCraftPlayer().handle, EquipmentSlot.MAINHAND)
+                event.item.toMC().hurtAndBreak(1,player.toMC(), EquipmentSlot.MAINHAND)
                 shouldBreak = true
             }
             world.spawnParticle(Particle.END_ROD,location,0)

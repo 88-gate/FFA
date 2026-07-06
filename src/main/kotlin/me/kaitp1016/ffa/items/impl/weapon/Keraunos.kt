@@ -5,9 +5,8 @@ import me.kaitp1016.ffa.items.ItemCategory
 import me.kaitp1016.ffa.items.Rarity
 import me.kaitp1016.ffa.items.events.ItemEventHandler
 import me.kaitp1016.ffa.items.events.ItemEvents
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftEntity
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftItemStack
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftPlayer
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
+import me.kaitp1016.ffa.utils.NMSUtils.toMCCopy
 import me.kaitp1016.ffa.utils.Scheduler
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.Identifier
@@ -57,7 +56,7 @@ object Keraunos: CustomItem(), Listener {
     val cooldownLocation = Identifier.parse("ffa:keranunos_cooldown")
 
     override fun createItem(amount: Int): ItemStack {
-        return super.createItem(amount).asCraftItemStack().handle.apply {
+        return super.createItem(amount).toMC().apply {
             this.set(DataComponents.USE_COOLDOWN, UseCooldown(COOLDOWN, Optional.of(cooldownLocation)))
             this.set(
                 DataComponents.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers(
@@ -76,11 +75,11 @@ object Keraunos: CustomItem(), Listener {
 
     @ItemEventHandler
     fun onTridentThrow(event: ItemEvents.TridentThrowEvent) {
-        if (event.bukkitEvent.projectile.asCraftEntity().handle is ThrownKeraunos) return
+        if (event.bukkitEvent.projectile.toMC() is ThrownKeraunos) return
 
-        val player = event.player.asCraftPlayer().handle
+        val player = event.player.toMC()
         val level = player.level()
-        val item = event.bukkitEvent.itemStack.asCraftItemStack().handle ?: return
+        val item = event.bukkitEvent.itemStack.toMCCopy()
 
         event.isCancelled = true
 
@@ -104,7 +103,7 @@ object Keraunos: CustomItem(), Listener {
 
     @EventHandler
     fun onDamage(event: EntityDamageByEntityEvent) {
-        if (event.damager.asCraftEntity().handle is ThrownKeraunos.KeraunosLightningBolt) {
+        if (event.damager.toMC() is ThrownKeraunos.KeraunosLightningBolt) {
             event.damage *= THUNDER_DAMAGE_MULTIPLIER
         }
     }

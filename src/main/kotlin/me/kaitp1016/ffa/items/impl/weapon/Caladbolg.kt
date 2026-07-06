@@ -6,8 +6,7 @@ import me.kaitp1016.ffa.items.Rarity
 import me.kaitp1016.ffa.items.events.ItemEventHandler
 import me.kaitp1016.ffa.items.events.ItemEvents
 import me.kaitp1016.ffa.plugin
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftItemStack
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftPlayer
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import me.kaitp1016.ffa.utils.Scheduler
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.Identifier
@@ -64,7 +63,7 @@ object Caladbolg: CustomItem() {
     )
 
     override fun createItem(amount: Int): ItemStack {
-        return super.createItem(amount).asCraftItemStack().handle.apply {
+        return super.createItem(amount).toMC().apply {
             this.set(DataComponents.UNBREAKABLE, Unit.INSTANCE)
             this.set(DataComponents.USE_COOLDOWN, UseCooldown(COOLDOWN, Optional.of(cooldownLocation)))
             this.set(DataComponents.ATTRIBUTE_MODIFIERS, defaultModifier)
@@ -87,8 +86,8 @@ object Caladbolg: CustomItem() {
 
     @ItemEventHandler
     fun onUse(event: ItemEvents.UseEvent) {
-        val item = event.item.asCraftItemStack().handle
-        val player = event.player.asCraftPlayer().handle
+        val item = event.item.toMC()
+        val player = event.player.toMC()
 
         if (!player.cooldowns.isOnCooldown(item)) {
             player.cooldowns.addCooldown(cooldownLocation,COOLDOWN.toInt() * 20)
@@ -104,8 +103,8 @@ object Caladbolg: CustomItem() {
 
     @ItemEventHandler
     fun onTick(event: ItemEvents.TickWhileHolding) {
-        val item = event.item.asCraftItemStack().handle
-        val player = event.player.asCraftPlayer().handle
+        val item = event.item.toMC()
+        val player = event.player.toMC()
 
         val cooldown = player.cooldowns.getCooldownPercent(item,0f)
         if (cooldown < ABILITY_TIME_PERCENT) {

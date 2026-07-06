@@ -9,14 +9,12 @@ import me.kaitp1016.ffa.items.events.ItemEvents
 import me.kaitp1016.ffa.mc
 import me.kaitp1016.ffa.plugin
 import me.kaitp1016.ffa.utils.DatapackAPI.getPrestige
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftBlock
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftPlayer
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftWorld
+import me.kaitp1016.ffa.utils.NMSUtils.toCraft
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
 import net.minecraft.server.level.ServerPlayer
-import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
@@ -45,9 +43,9 @@ object TemporaryBlocks: Listener {
             if (event.bukkitEvent.action != Action.RIGHT_CLICK_BLOCK) return
             event.isCancelled = true
 
-            if (!onUse(event.player.asCraftPlayer().handle)) return
+            if (!onUse(event.player.toMC())) return
 
-            val level = event.player.asCraftPlayer().handle.level()
+            val level = event.player.toMC().level()
             val face = event.bukkitEvent.blockFace
             val clickedBlock = event.bukkitEvent.clickedBlock ?: return
             val location = if (clickedBlock.isReplaceable) clickedBlock.location else event.bukkitEvent.clickedBlock?.location?.add(face.modX.toDouble(),face.modY.toDouble(),face.modZ.toDouble()) ?: return
@@ -125,7 +123,7 @@ object TemporaryBlocks: Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     fun onBreak(event: BlockBreakEvent) {
-        val block = event.block.asCraftBlock()
+        val block = event.block.toCraft()
         val pos = block.position
         val level = block.craftWorld.handle
         val levelkey = level.dimension()
@@ -138,7 +136,8 @@ object TemporaryBlocks: Listener {
 
     @EventHandler
     fun onWorldUnload(event: WorldUnloadEvent) {
-        val level = event.world.asCraftWorld().handle.dimension()
+        val level = event.world.toMC().dimension()
+        
         placedBlocks.removeAll {
             if (it.level == level) {
                 it.remove()

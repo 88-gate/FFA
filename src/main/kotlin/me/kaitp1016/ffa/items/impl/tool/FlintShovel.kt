@@ -6,7 +6,7 @@ import me.kaitp1016.ffa.items.Rarity
 import me.kaitp1016.ffa.items.events.ItemEventHandler
 import me.kaitp1016.ffa.items.events.ItemEvents
 import me.kaitp1016.ffa.plugin
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftBlockState
+import me.kaitp1016.ffa.utils.NMSUtils.toCraft
 import me.kaitp1016.ffa.utils.RecipeUtils
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
@@ -43,7 +43,7 @@ object FlintShovel: CustomItem() {
 
     @ItemEventHandler
     fun onBlockDropItem(event: ItemEvents.BlockDropItemEven) {
-        if (event.bukkitEvent.blockState.asCraftBlockState().handle.hasBlockEntity()) return
+        if (event.bukkitEvent.blockState.toCraft().handle.hasBlockEntity()) return
 
         event.bukkitEvent.items.forEach {item ->
             val recipe = RecipeUtils.furnaceRecipes.find { it.inputChoice.test(item.itemStack) }

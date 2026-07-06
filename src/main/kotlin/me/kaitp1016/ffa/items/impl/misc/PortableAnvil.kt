@@ -5,8 +5,7 @@ import me.kaitp1016.ffa.items.ItemCategory
 import me.kaitp1016.ffa.items.Rarity
 import me.kaitp1016.ffa.items.events.ItemEventHandler
 import me.kaitp1016.ffa.items.events.ItemEvents
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftItemStack
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftPlayer
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import me.kaitp1016.ffa.utils.NMSUtils.toMCComponent
 import net.kyori.adventure.text.Component
 import net.minecraft.core.BlockPos
@@ -32,7 +31,7 @@ object PortableAnvil: CustomItem() {
     override val category = ItemCategory.MISC
 
     override fun createItem(amount: Int): ItemStack {
-        return super.createItem(amount).asCraftItemStack().handle.apply{
+        return super.createItem(amount).toMC().apply{
             this.set(DataComponents.MAX_DAMAGE,16)
             this.set(DataComponents.DAMAGE,0)
             this.set(DataComponents.MAX_STACK_SIZE,1)
@@ -42,8 +41,8 @@ object PortableAnvil: CustomItem() {
     @ItemEventHandler
     fun onUsed(event: ItemEvents.UseEvent) {
         val player = event.player
-        val item = event.item.asCraftItemStack().handle
-        player.asCraftPlayer().handle.openMenu(AnvilWithStickMenu.getProvider(item))
+        val item = event.item.toMC()
+        player.toMC().openMenu(AnvilWithStickMenu.getProvider(item))
 
         event.isCancelled = true
     }

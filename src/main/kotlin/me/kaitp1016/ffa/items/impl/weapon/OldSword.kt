@@ -6,7 +6,7 @@ import me.kaitp1016.ffa.items.Rarity
 import me.kaitp1016.ffa.items.events.ItemEventHandler
 import me.kaitp1016.ffa.items.events.ItemEvents
 import me.kaitp1016.ffa.plugin
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftItemStack
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.Identifier
@@ -36,7 +36,7 @@ object OldSword: CustomItem() {
     const val MAX_DAMAGE = 8.0
 
     override fun createItem(amount: Int): ItemStack {
-        return super.createItem(amount).asCraftItemStack().handle.apply {
+        return super.createItem(amount).toMC().apply {
             this.set(DataComponents.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers(
                 listOf(
                     ItemAttributeModifiers.Entry(Attributes.ATTACK_DAMAGE, AttributeModifier(Item.BASE_ATTACK_DAMAGE_ID, 5.0, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND),

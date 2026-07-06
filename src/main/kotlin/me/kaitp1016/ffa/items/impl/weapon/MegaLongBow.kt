@@ -5,8 +5,8 @@ import me.kaitp1016.ffa.items.ItemCategory
 import me.kaitp1016.ffa.items.Rarity
 import me.kaitp1016.ffa.items.events.ItemEventHandler
 import me.kaitp1016.ffa.items.events.ItemEvents
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftItemStack
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftPlayer
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.Identifier
 import net.minecraft.server.level.ServerPlayer
@@ -36,7 +36,7 @@ object MegaLongBow: CustomItem() {
     val cooldownLocation = Identifier.parse("ffa:mega_long_bow_cooldown")
 
     override fun createItem(amount: Int): org.bukkit.inventory.ItemStack {
-        return super.createItem(amount).asCraftItemStack().handle.apply {
+        return super.createItem(amount).toMC().apply {
             set(DataComponents.ITEM_MODEL, Identifier.parse("minecraft:bow"))
             set(DataComponents.USE_COOLDOWN, UseCooldown(COOLDOWN, Optional.of(cooldownLocation)) )
         }.bukkitStack
@@ -44,9 +44,9 @@ object MegaLongBow: CustomItem() {
 
     @ItemEventHandler
     fun onUse(event: ItemEvents.UseEvent) {
-        val player = event.player.asCraftPlayer().handle
+        val player = event.player.toMC()
         val level = player.level()
-        val weapon = event.bukkitEvent.item!!.asCraftItemStack().handle
+        val weapon = event.bukkitEvent.item!!.toMC()
         if (player.cooldowns.isOnCooldown(weapon)) return
 
         val pickupItem = player.getProjectile(weapon)

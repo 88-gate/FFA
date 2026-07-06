@@ -5,7 +5,7 @@ import me.kaitp1016.ffa.items.ItemCategory
 import me.kaitp1016.ffa.items.Rarity
 import me.kaitp1016.ffa.items.events.ItemEventHandler
 import me.kaitp1016.ffa.items.events.ItemEvents
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftItemStack
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.Identifier
 import org.bukkit.Location
@@ -21,7 +21,7 @@ object AspectOfTheVoid: CustomItem() {
     override val category = ItemCategory.ADMIN
 
     override fun createItem(amount: Int): ItemStack {
-        return super.createItem(amount).asCraftItemStack().handle.apply {
+        return super.createItem(amount).toMC().apply {
             this.set(DataComponents.ITEM_MODEL, Identifier.parse("minecraft:diamond_shovel"))
         }.bukkitStack
     }

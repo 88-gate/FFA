@@ -1,14 +1,11 @@
 package me.kaitp1016.ffa.commands
 
-import me.kaitp1016.ffa.game.CombatTag.hasCombatTag
 import me.kaitp1016.ffa.mc
 import me.kaitp1016.ffa.utils.DatapackAPI.addMoney
 import me.kaitp1016.ffa.utils.DatapackAPI.getMoney
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftPlayer
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import me.kaitp1016.ffa.utils.Utils
 import net.minecraft.network.chat.Component
-import org.bukkit.Bukkit
-import org.bukkit.Sound
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -34,12 +31,12 @@ object PayCommand: CommandExecutor, TabCompleter {
             return true
         }
 
-        if (player.asCraftPlayer().handle.getMoney() < amount) {
+        if (player.toMC().getMoney() < amount) {
             player.sendMessage("自分の所持ポイント以上のお金を振り込めません。")
             return true
         }
 
-        player.asCraftPlayer().handle.addMoney(-amount)
+        player.toMC().addMoney(-amount)
         target.addMoney(amount)
 
         player.sendMessage("§e${amount}ポイント §aを §b${target.plainTextName} §aに振り込みました!")

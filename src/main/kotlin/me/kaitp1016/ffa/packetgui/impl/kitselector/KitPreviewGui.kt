@@ -2,7 +2,7 @@ package me.kaitp1016.ffa.packetgui.impl.kitselector
 
 import me.kaitp1016.ffa.packetgui.AbstractPacketGui
 import me.kaitp1016.ffa.packetgui.ChestPacketGui
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftItemStack
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import net.kyori.adventure.text.Component
 import net.minecraft.network.protocol.game.ServerboundContainerClickPacket
 import net.minecraft.server.level.ServerPlayer
@@ -25,12 +25,12 @@ class KitPreviewGui: ChestPacketGui {
         var i = -1
         kit.items.forEach {item ->
             i++
-            this.setItem(i,item.asCraftItemStack().handle.copy())
+            this.setItem(i,item.toMC().copy())
         }
 
         kit.armors.forEach {
             val slot = slotMap[it.key]!!
-            this.setItem(slot,it.value.asCraftItemStack().handle.copy())
+            this.setItem(slot,it.value.toMC().copy())
         }
 
         super.update(reopen)

@@ -6,8 +6,7 @@ import me.kaitp1016.ffa.items.Rarity
 import me.kaitp1016.ffa.items.events.ItemEventHandler
 import me.kaitp1016.ffa.items.events.ItemEvents
 import me.kaitp1016.ffa.utils.DatapackAPI.getPrestige
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftItemStack
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftPlayer
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import me.kaitp1016.ffa.utils.NMSUtils.toMCComponent
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.TextDecoration
@@ -38,7 +37,7 @@ object EnhancedSprintPack: CustomItem() {
     const val COOLDOWN = 600
 
     override fun createItem(amount: Int): ItemStack {
-        return super.createItem(amount).asCraftItemStack().handle.apply {
+        return super.createItem(amount).toMC().apply {
             this.set(DataComponents.POTION_CONTENTS, PotionContents(Optional.of(Potions.SWIFTNESS), Optional.empty<Int>(),emptyList<MobEffectInstance>(), Optional.empty<String>()))
             this.set(DataComponents.USE_COOLDOWN, UseCooldown(COOLDOWN / 20f, Optional.of(COOLDOWN_IDENTIFIER)))
             this.set(DataComponents.ITEM_MODEL, Identifier.parse("minecraft:tipped_arrow"))
@@ -57,7 +56,7 @@ object EnhancedSprintPack: CustomItem() {
         val player = event.player
         if (player.hasCooldown(event.item)) return
 
-        if (player.asCraftPlayer().handle.getPrestige() < 1) {
+        if (player.toMC().getPrestige() < 1) {
             player.sendMessage("このアイテムを使用するには Prestige 1以上が必要です!")
             return
         }
@@ -65,6 +64,6 @@ object EnhancedSprintPack: CustomItem() {
         player.addPotionEffect(PotionEffect(PotionEffectType.SPEED,100,2))
         player.world.playSound(player.location, Sound.BLOCK_AMETHYST_BLOCK_PLACE,2f,0.9f)
         player.world.spawnParticle(Particle.GLOW,player.location,30,0.5,1.3,0.5)
-        player.asCraftPlayer().handle.cooldowns.addCooldown(COOLDOWN_IDENTIFIER,COOLDOWN)
+        player.toMC().cooldowns.addCooldown(COOLDOWN_IDENTIFIER,COOLDOWN)
     }
 }

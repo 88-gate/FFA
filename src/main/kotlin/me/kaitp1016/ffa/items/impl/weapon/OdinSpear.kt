@@ -1,15 +1,12 @@
 package me.kaitp1016.ffa.items.impl.weapon
 
 import me.kaitp1016.ffa.items.CustomItem
+import me.kaitp1016.ffa.items.ItemCategory
 import me.kaitp1016.ffa.items.Rarity
 import me.kaitp1016.ffa.items.events.ItemEventHandler
 import me.kaitp1016.ffa.items.events.ItemEvents
-import me.kaitp1016.ffa.items.ItemCategory
 import me.kaitp1016.ffa.mc
-import me.kaitp1016.ffa.plugin
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftEntity
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftItemStack
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftPlayer
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.Identifier
@@ -36,11 +33,12 @@ import net.minecraft.world.level.SimpleExplosionDamageCalculator
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.EntityHitResult
 import net.minecraft.world.phys.Vec3
-import org.bukkit.*
+import org.bukkit.Location
+import org.bukkit.Material
+import org.bukkit.Particle
+import org.bukkit.Sound
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.inventory.ItemStack
-import org.bukkit.inventory.Recipe
-import org.bukkit.inventory.ShapedRecipe
 import java.util.*
 
 object OdinSpear: CustomItem() {
@@ -60,7 +58,7 @@ object OdinSpear: CustomItem() {
     val cooldownLocation = Identifier.parse("ffa:odin_spear_cooldown")
 
     override fun createItem(amount: Int): ItemStack {
-        return super.createItem(amount).asCraftItemStack().handle.apply {
+        return super.createItem(amount).toMC().apply {
             this.set(DataComponents.USE_COOLDOWN, UseCooldown(COOLDOWN, Optional.of(cooldownLocation)))
             this.set(DataComponents.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers(
                 listOf(
@@ -76,11 +74,11 @@ object OdinSpear: CustomItem() {
 
     @ItemEventHandler
     fun onTridentThrow(event: ItemEvents.TridentThrowEvent) {
-        if (event.bukkitEvent.projectile.asCraftEntity().handle is ThrownOdinSpear) return
+        if (event.bukkitEvent.projectile.toMC() is ThrownOdinSpear) return
 
-        val player = event.player.asCraftPlayer().handle
+        val player = event.player.toMC()
         val level = player.level()
-        val item = event.bukkitEvent.itemStack.asCraftItemStack().handle ?: return
+        val item = event.bukkitEvent.itemStack.toMC() ?: return
 
         event.isCancelled = true
 

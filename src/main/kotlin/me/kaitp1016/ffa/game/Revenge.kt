@@ -4,7 +4,7 @@ import me.kaitp1016.ffa.events.impl.TickEvent
 import me.kaitp1016.ffa.events.impl.UpdateActionBarEvent
 import me.kaitp1016.ffa.setting.Settings
 import me.kaitp1016.ffa.utils.DatapackAPI.addMoney
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftPlayer
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import me.kaitp1016.ffa.utils.Scheduler
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
@@ -39,7 +39,7 @@ object Revenge: Listener {
             killer.world.playSound(killer.location,Sound.ENTITY_VINDICATOR_CELEBRATE,2f,1.15f)
 
             val reward = Settings.REVENGE_REWARD.getValue()
-            killer.asCraftPlayer().handle.addMoney(reward)
+            killer.toMC().addMoney(reward)
             killer.sendMessage("§a復讐を成功して §e${reward}コイン §aを受け取りました!")
 
             val text = Component.empty().color(NamedTextColor.YELLOW).append(killer.name().append(Component.text(" は ").color(NamedTextColor.YELLOW).append(player.name()).append(Component.text(" に復讐を果たした!").color(NamedTextColor.YELLOW))))

@@ -3,7 +3,7 @@ package me.kaitp1016.ffa.items.impl.consumeable
 import me.kaitp1016.ffa.items.CustomItem
 import me.kaitp1016.ffa.items.ItemCategory
 import me.kaitp1016.ffa.items.Rarity
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftItemStack
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import me.kaitp1016.ffa.utils.NMSUtils.toMCComponent
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
@@ -31,7 +31,7 @@ object GoldenHead: CustomItem() {
     override val category = ItemCategory.CONSUMEABLE
 
     override fun createItem(amount: Int): ItemStack {
-        return super.createItem(amount).asCraftItemStack().handle.apply {
+        return super.createItem(amount).toMC().apply {
             this.set(DataComponents.PROFILE, ResolvableProfile.createUnresolved(UUID.fromString("ab467df5-5346-4ed5-a25e-d3435403cfb1")))
             this.set(DataComponents.ITEM_NAME,getDisplayName(this.bukkitStack).toMCComponent())
             this.set(DataComponents.FOOD, FoodProperties(4,4f,true))

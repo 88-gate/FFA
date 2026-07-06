@@ -4,7 +4,7 @@ import me.kaitp1016.ffa.items.CustomItem
 import me.kaitp1016.ffa.items.ItemCategory
 import me.kaitp1016.ffa.items.Rarity
 import me.kaitp1016.ffa.plugin
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftItemStack
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import net.minecraft.core.component.DataComponents
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
@@ -20,7 +20,7 @@ object DiamondShear: CustomItem() {
     override val category = ItemCategory.TOOL
 
     override fun createItem(amount: Int): ItemStack {
-        return super.createItem(amount).asCraftItemStack().handle.apply {
+        return super.createItem(amount).toMC().apply {
             this.set(DataComponents.MAX_DAMAGE,640)
         }.bukkitStack
     }

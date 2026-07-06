@@ -5,7 +5,8 @@ import me.kaitp1016.ffa.items.ItemManager
 import me.kaitp1016.ffa.packetgui.impl.ItemListGui
 import me.kaitp1016.ffa.packetgui.impl.TestSignGui
 import me.kaitp1016.ffa.packetgui.impl.setting.SettingGui
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftPlayer
+import me.kaitp1016.ffa.park.gui.ParkMainGui
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import me.kaitp1016.ffa.utils.Utils
 import net.minecraft.core.BlockPos
 import org.bukkit.command.Command
@@ -13,7 +14,6 @@ import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabCompleter
 import org.bukkit.entity.Player
-import org.json.simple.ItemList
 
 object FFACommand : CommandExecutor, TabCompleter {
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<String>): Boolean {
@@ -42,19 +42,23 @@ object FFACommand : CommandExecutor, TabCompleter {
         }
 
         if (args[0] == "test") {
-            TestSignGui(sender.asCraftPlayer().handle).open()
+            TestSignGui(sender.toMC()).open()
+        }
+
+        if (args[0] == "park") {
+            ParkMainGui(sender.toMC(),null).open()
         }
 
         if (args[0] == "minecontainertest") {
-            MiningChest(BlockPos.ZERO,sender.uniqueId).openContainer(sender.asCraftPlayer().handle)
+            MiningChest(BlockPos.ZERO,sender.uniqueId).openContainer(sender.toMC())
         }
 
         if (args[0] == "setting") {
-            SettingGui(sender.asCraftPlayer().handle,null).open()
+            SettingGui(sender.toMC(),null).open()
         }
 
         if (args[0] == "items") {
-            ItemListGui(sender.asCraftPlayer().handle,null).open()
+            ItemListGui(sender.toMC(),null).open()
         }
 
         return true
@@ -69,6 +73,7 @@ object FFACommand : CommandExecutor, TabCompleter {
             suggestions.add("items")
             suggestions.add("setting")
             suggestions.add("minecontainertest")
+            suggestions.add("park")
         }
         else if (args.getOrNull(0) == "give" && args.size == 2) {
             suggestions.addAll(ItemManager.itemIdMap.keys)

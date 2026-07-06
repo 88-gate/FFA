@@ -6,7 +6,7 @@ import me.kaitp1016.ffa.items.events.ItemEventHandler
 import me.kaitp1016.ffa.items.events.ItemEvents
 import me.kaitp1016.ffa.items.ItemCategory
 import me.kaitp1016.ffa.packetgui.impl.setting.SettingGui
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftPlayer
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import org.bukkit.Material
 
 object SettingBook: CustomItem() {
@@ -18,7 +18,7 @@ object SettingBook: CustomItem() {
 
     @ItemEventHandler
     fun onUsed(event: ItemEvents.UseEvent) {
-        val player = event.player.asCraftPlayer().handle
+        val player = event.player.toMC()
         SettingGui(player,null).open()
     }
 }

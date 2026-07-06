@@ -4,7 +4,7 @@ import me.kaitp1016.ffa.items.CustomItem
 import me.kaitp1016.ffa.items.Rarity
 import me.kaitp1016.ffa.items.ItemCategory
 import me.kaitp1016.ffa.plugin
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftItemStack
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import net.minecraft.core.component.DataComponents
 import net.minecraft.world.entity.EquipmentSlotGroup
 import net.minecraft.world.entity.ai.attributes.AttributeModifier
@@ -25,7 +25,7 @@ object RefinedDiamondSword: CustomItem() {
     override val category = ItemCategory.WEAPON
 
     override fun createItem(amount: Int): ItemStack {
-        return super.createItem(amount).asCraftItemStack().handle.apply {
+        return super.createItem(amount).toMC().apply {
             this.set(
                 DataComponents.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers(
                     listOf(

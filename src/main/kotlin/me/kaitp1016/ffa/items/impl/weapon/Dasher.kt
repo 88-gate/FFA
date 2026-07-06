@@ -6,8 +6,7 @@ import me.kaitp1016.ffa.items.ItemCategory
 import me.kaitp1016.ffa.items.Rarity
 import me.kaitp1016.ffa.items.events.ItemEventHandler
 import me.kaitp1016.ffa.items.events.ItemEvents
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftItemStack
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftPlayer
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import me.kaitp1016.ffa.utils.NMSUtils.sendPacket
 import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponents
@@ -43,7 +42,7 @@ object Dasher: CustomItem(), Listener {
     private val lastPreviewPos = mutableListOf<Preview>()
 
     override fun createItem(amount: Int): ItemStack {
-        return super.createItem(amount).asCraftItemStack().handle.apply {
+        return super.createItem(amount).toMC().apply {
             this.set(DataComponents.USE_COOLDOWN, UseCooldown(COOLDOWN_TICKS / 20f, Optional.of(COOLDOWN_IDIENTIFIER)))
         }.bukkitStack
     }
@@ -99,7 +98,7 @@ object Dasher: CustomItem(), Listener {
 
         player.teleport(location)
         player.playSound(player, Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f)
-        player.asCraftPlayer().handle.cooldowns.addCooldown(COOLDOWN_IDIENTIFIER, COOLDOWN_TICKS)
+        player.toMC().cooldowns.addCooldown(COOLDOWN_IDIENTIFIER, COOLDOWN_TICKS)
     }
 
     @EventHandler(priority = EventPriority.LOW)

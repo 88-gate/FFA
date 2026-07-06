@@ -6,7 +6,7 @@ import me.kaitp1016.ffa.items.Rarity
 import me.kaitp1016.ffa.items.events.ItemEventHandler
 import me.kaitp1016.ffa.items.events.ItemEvents
 import me.kaitp1016.ffa.plugin
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftEntity
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import net.minecraft.world.entity.animal.Animal
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
@@ -43,8 +43,8 @@ object FlintSword: CustomItem() {
 
     @ItemEventHandler
     fun onDamage(event: ItemEvents.DamageEntityEvent) {
-        if (event.bukkitEvent.entity.asCraftEntity().handle is Animal) {
-            event.bukkitEvent.damage = event.bukkitEvent.damage * 2
+        if (event.bukkitEvent.entity.toMC() is Animal) {
+            event.bukkitEvent.damage *= 2
         }
         else {
             event.isCancelled = true

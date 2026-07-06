@@ -3,9 +3,7 @@ package me.kaitp1016.ffa.game
 import me.kaitp1016.ffa.events.impl.TickEvent
 import me.kaitp1016.ffa.events.impl.UpdateActionBarEvent
 import me.kaitp1016.ffa.setting.Settings
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftPlayer
-import org.bukkit.damage.DamageSource
-import org.bukkit.damage.DamageType
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
@@ -32,7 +30,7 @@ object CombatTag: Listener {
     fun onLogout(event: PlayerQuitEvent) {
         val player = event.player
         if (player.hasCombatTag()) {
-            player.asCraftPlayer().handle.kill(player.asCraftPlayer().handle.level())
+            player.toMC().kill(player.toMC().level())
         }
     }
 

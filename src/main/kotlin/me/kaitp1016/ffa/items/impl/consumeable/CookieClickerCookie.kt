@@ -6,7 +6,7 @@ import me.kaitp1016.ffa.items.Rarity
 import me.kaitp1016.ffa.items.events.ItemEventHandler
 import me.kaitp1016.ffa.items.events.ItemEvents
 import me.kaitp1016.ffa.plugin
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftItemStack
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import me.kaitp1016.ffa.utils.NMSUtils.toMCComponent
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
@@ -33,7 +33,7 @@ object CookieClickerCookie: CustomItem() {
     override val category = ItemCategory.CONSUMEABLE
 
     override fun createItem(amount: Int): ItemStack {
-        return super.createItem(amount).asCraftItemStack().handle.apply {
+        return super.createItem(amount).toMC().apply {
             val originalData = this.get(DataComponents.CUSTOM_DATA)?.copyTag() ?: CompoundTag()
 
             this.set(DataComponents.CUSTOM_DATA, CustomData.of(originalData.apply {
@@ -61,11 +61,11 @@ object CookieClickerCookie: CustomItem() {
     }
 
     fun getCookie(item: ItemStack): Int {
-        return item.asCraftItemStack().handle.get(DataComponents.CUSTOM_DATA)?.copyTag()?.getInt("cookies")?.getOrNull() ?: 1
+        return item.toMC().get(DataComponents.CUSTOM_DATA)?.copyTag()?.getInt("cookies")?.getOrNull() ?: 1
     }
 
     fun setCookie(item: ItemStack, cookie: Int): ItemStack {
-        return item.asCraftItemStack().handle.apply {
+        return item.toMC().apply {
             val originalData = this.get(DataComponents.CUSTOM_DATA)!!.copyTag()
 
             this.set(DataComponents.CUSTOM_DATA, CustomData.of(originalData.apply {

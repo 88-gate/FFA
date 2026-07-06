@@ -6,8 +6,7 @@ import me.kaitp1016.ffa.items.Rarity
 import me.kaitp1016.ffa.items.events.ItemEventHandler
 import me.kaitp1016.ffa.items.events.ItemEvents
 import me.kaitp1016.ffa.plugin
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftItemStack
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftPlayer
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import me.kaitp1016.ffa.utils.Utils.consumeItem
 import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
@@ -60,7 +59,7 @@ object EmeraldBlade: CustomItem() {
     }
 
     override fun createItem(amount: Int): ItemStack {
-        return super.createItem(amount).asCraftItemStack().handle.apply {
+        return super.createItem(amount).toMC().apply {
             this.set(DataComponents.USE_COOLDOWN, UseCooldown(COOLDOWN, Optional.of(cooldownLocation)))
             this.set(DataComponents.ATTRIBUTE_MODIFIERS, ItemAttributeModifiers(
                 listOf(
@@ -74,8 +73,8 @@ object EmeraldBlade: CustomItem() {
 
     @ItemEventHandler
     fun onDamage(event: ItemEvents.DamageEntityEvent) {
-        val item = event.item.asCraftItemStack().handle
-        val player = event.player.asCraftPlayer().handle
+        val item = event.item.toMC()
+        val player = event.player.toMC()
         val target = event.bukkitEvent.entity
 
         if (target !is LivingEntity || player.cooldowns.isOnCooldown(item)) {

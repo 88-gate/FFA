@@ -6,8 +6,7 @@ import me.kaitp1016.ffa.items.Rarity
 import me.kaitp1016.ffa.items.events.ItemEventHandler
 import me.kaitp1016.ffa.items.events.ItemEvents
 import me.kaitp1016.ffa.packetgui.impl.kitselector.KitSelectGui
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftItemStack
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftPlayer
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.Identifier
 import org.bukkit.Material
@@ -22,7 +21,7 @@ object FFAKitSelector: CustomItem() {
     override val category = ItemCategory.ADMIN
 
     override fun createItem(amount: Int): ItemStack {
-        return super.createItem(amount).asCraftItemStack().handle.apply {
+        return super.createItem(amount).toMC().apply {
             this.set(DataComponents.ITEM_MODEL, Identifier.parse("minecraft:knowledge_book"))
         }.bukkitStack
     }
@@ -31,6 +30,6 @@ object FFAKitSelector: CustomItem() {
     fun onUsed(event: ItemEvents.UseEvent) {
         val player = event.player
         player.getAttribute(Attribute.MAX_HEALTH)?.baseValue = 40.0
-        KitSelectGui(player.asCraftPlayer().handle,listOf(),true).open()
+        KitSelectGui(player.toMC(),listOf(),true).open()
     }
 }

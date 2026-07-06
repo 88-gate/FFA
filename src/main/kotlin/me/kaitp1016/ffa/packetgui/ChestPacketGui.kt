@@ -102,10 +102,10 @@ abstract class ChestPacketGui: AbstractPacketGui {
     }
 
     override fun open() {
+        this.onOpen()
         player.containerMenu = PacketGuiContainer(syncId,this)
         player.connection.send(ClientboundOpenScreenPacket(syncId, menuType,displayName.toMCComponent()))
         this.isOpened = true
-        this.onOpen()
 
         update()
     }

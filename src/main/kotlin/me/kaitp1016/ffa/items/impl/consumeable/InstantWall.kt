@@ -6,8 +6,8 @@ import me.kaitp1016.ffa.items.Rarity
 import me.kaitp1016.ffa.items.events.ItemEventHandler
 import me.kaitp1016.ffa.items.events.ItemEvents
 import me.kaitp1016.ffa.plugin
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftBlock
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftPlayer
+import me.kaitp1016.ffa.utils.NMSUtils.toCraft
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.Blocks
@@ -44,7 +44,7 @@ object InstantWall: CustomItem() {
 
         event.isCancelled = true
 
-        val player = event.player.asCraftPlayer().handle
+        val player = event.player.toMC()
         val world = player.level() as ServerLevel
 
         if (!this.consumeOrMessage(event.player, amount = 1)) return
@@ -52,7 +52,7 @@ object InstantWall: CustomItem() {
         val clickedBlock = event.bukkitEvent.clickedBlock!!
         val block = world.getBlockState(BlockPos(clickedBlock.x,clickedBlock.y,clickedBlock.z))
         val offset = if (block.canBeReplaced()) Vector(0,0,0) else event.bukkitEvent.blockFace.direction
-        val basePos = event.bukkitEvent.clickedBlock!!.asCraftBlock().position.offset(offset.blockX,offset.blockY,offset.blockZ) ?: return
+        val basePos = event.bukkitEvent.clickedBlock?.toCraft()?.position?.offset(offset.blockX,offset.blockY,offset.blockZ) ?: return
         val poses = mutableListOf<BlockPos>()
 
         if (abs(player.bukkitYaw % 180f) in 45f..135f) {

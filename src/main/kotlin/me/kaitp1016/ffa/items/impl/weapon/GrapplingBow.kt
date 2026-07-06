@@ -1,12 +1,11 @@
 package me.kaitp1016.ffa.items.impl.weapon
 
 import me.kaitp1016.ffa.items.CustomItem
+import me.kaitp1016.ffa.items.ItemCategory
 import me.kaitp1016.ffa.items.Rarity
 import me.kaitp1016.ffa.items.events.ItemEventHandler
 import me.kaitp1016.ffa.items.events.ItemEvents
-import me.kaitp1016.ffa.items.ItemCategory
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftItemStack
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftPlayer
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.projectile.Projectile
@@ -27,10 +26,10 @@ object GrapplingBow: CustomItem() {
 
     @ItemEventHandler
     fun onShoot(event: ItemEvents.ShootEvent) {
-        val player = event.player.asCraftPlayer().handle
+        val player = event.player.toMC()
         val level = player.level()
-        val weapon = event.bukkitEvent.bow!!.asCraftItemStack().handle
-        val pickupItem = event.bukkitEvent.consumable?.asCraftItemStack()?.handle ?: ItemStack.EMPTY
+        val weapon = event.bukkitEvent.bow!!.toMC()
+        val pickupItem = event.bukkitEvent.consumable?.toMC() ?: ItemStack.EMPTY
 
         event.bukkitEvent.projectile.remove()
 

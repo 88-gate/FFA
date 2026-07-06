@@ -6,8 +6,7 @@ import me.kaitp1016.ffa.items.Rarity
 import me.kaitp1016.ffa.items.events.ItemEventHandler
 import me.kaitp1016.ffa.items.events.ItemEvents
 import me.kaitp1016.ffa.utils.DatapackAPI.getPrestige
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftItemStack
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftPlayer
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import me.kaitp1016.ffa.utils.Scheduler
 import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
@@ -32,15 +31,15 @@ object SpeedSkill: CustomItem() {
     val SPEED_SKILL_MODIFIER = Identifier.parse("ffa:w")
 
     override fun createItem(amount: Int): ItemStack {
-        return super.createItem(amount).asCraftItemStack().handle.apply {
+        return super.createItem(amount).toMC().apply {
             this.set(DataComponents.USE_COOLDOWN, UseCooldown(COOLDOWN_TICK / 20f, Optional.of(COOLDOWN_IDENTIFIER)))
         }.bukkitStack
     }
 
     @ItemEventHandler
     fun onUse(event: ItemEvents.UseEvent) {
-        val player = event.player.asCraftPlayer().handle
-        val item = event.item.asCraftItemStack().handle
+        val player = event.player.toMC()
+        val item = event.item.toMC()
         if (player.cooldowns.isOnCooldown(item)) return
 
         if (player.getPrestige() < 5) {

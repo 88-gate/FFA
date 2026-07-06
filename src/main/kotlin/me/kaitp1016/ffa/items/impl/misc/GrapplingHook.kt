@@ -8,7 +8,7 @@ import me.kaitp1016.ffa.items.ItemManager.getCustomItemID
 import me.kaitp1016.ffa.items.Rarity
 import me.kaitp1016.ffa.items.events.ItemEventHandler
 import me.kaitp1016.ffa.items.events.ItemEvents
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftItemStack
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import me.kaitp1016.ffa.utils.Utils.equalsOneOf
 import net.minecraft.core.component.DataComponents
 import net.minecraft.util.Unit
@@ -36,7 +36,7 @@ object GrapplingHook: CustomItem(), Listener {
     private val cooldowns = mutableListOf<CombatCooldown>()
 
     override fun createItem(amount: Int): ItemStack {
-        return super.createItem(amount).asCraftItemStack().handle.apply {
+        return super.createItem(amount).toMC().apply {
             this.set(DataComponents.UNBREAKABLE, Unit.INSTANCE)
         }.bukkitStack
     }

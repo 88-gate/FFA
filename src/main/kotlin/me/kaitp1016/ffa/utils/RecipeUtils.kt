@@ -3,8 +3,9 @@ package me.kaitp1016.ffa.utils
 import me.kaitp1016.ffa.items.CustomItem
 import me.kaitp1016.ffa.items.ItemManager.getCustomItem
 import me.kaitp1016.ffa.items.ItemManager.isCustomItem
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftItemStack
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import me.kaitp1016.ffa.utils.NMSUtils.toMCComponent
+import me.kaitp1016.ffa.utils.NMSUtils.toMCCopy
 import net.kyori.adventure.text.Component
 import net.minecraft.core.component.DataComponents
 import net.minecraft.world.item.ItemStack
@@ -108,7 +109,7 @@ object RecipeUtils {
                     this.set(DataComponents.ITEM_NAME, Component.text("定形クラフトレシピ").toMCComponent())
                 }
 
-                return RecipeData(ingredients, typeItem,null, recipe.result.asCraftItemStack().handle, recipe)
+                return RecipeData(ingredients, typeItem,null, recipe.result.toMC(), recipe)
             }
 
             is ShapelessRecipe -> {
@@ -118,7 +119,7 @@ object RecipeUtils {
                     this.set(DataComponents.ITEM_NAME, Component.text("不定形クラフトレシピ").toMCComponent())
                 }
 
-                return RecipeData(ingredients, typeItem,null, recipe.result.asCraftItemStack().handle, recipe)
+                return RecipeData(ingredients, typeItem,null, recipe.result.toMC(), recipe)
             }
 
             is FurnaceRecipe -> {
@@ -132,7 +133,7 @@ object RecipeUtils {
                     this.set(DataComponents.ITEM_NAME, Component.text("燃料").toMCComponent())
                 }
 
-                return RecipeData(ingredients, typeItem,extraItem, recipe.result.asCraftItemStack().handle, recipe)
+                return RecipeData(ingredients, typeItem,extraItem, recipe.result.toMC(), recipe)
             }
 
             is BlastingRecipe -> {
@@ -146,7 +147,7 @@ object RecipeUtils {
                     this.set(DataComponents.ITEM_NAME, Component.text("燃料").toMCComponent())
                 }
 
-                return RecipeData(ingredients, typeItem,extraItem, recipe.result.asCraftItemStack().handle, recipe)
+                return RecipeData(ingredients, typeItem,extraItem, recipe.result.toMC(), recipe)
             }
 
             is SmokingRecipe -> {
@@ -160,7 +161,7 @@ object RecipeUtils {
                     this.set(DataComponents.ITEM_NAME, Component.text("燃料").toMCComponent())
                 }
 
-                return RecipeData(ingredients, typeItem,extraItem, recipe.result.asCraftItemStack().handle, recipe)
+                return RecipeData(ingredients, typeItem,extraItem, recipe.result.toMC(), recipe)
             }
 
             is CampfireRecipe -> {
@@ -170,7 +171,7 @@ object RecipeUtils {
                     this.set(DataComponents.ITEM_NAME, Component.text("キャンプファイヤーで焼くレシピ").toMCComponent())
                 }
 
-                return RecipeData(ingredients, typeItem,null, recipe.result.asCraftItemStack().handle, recipe)
+                return RecipeData(ingredients, typeItem,null, recipe.result.toMC(), recipe)
             }
 
             is CraftStonecuttingRecipe -> {
@@ -180,7 +181,7 @@ object RecipeUtils {
                     this.set(DataComponents.ITEM_NAME, Component.text("石切り台のレシピ").toMCComponent())
                 }
 
-                return RecipeData(ingredients, typeItem,null, recipe.result.asCraftItemStack().handle, recipe)
+                return RecipeData(ingredients, typeItem,null, recipe.result.toMC(), recipe)
             }
 
             is SmithingTransformRecipe -> {
@@ -190,7 +191,7 @@ object RecipeUtils {
                     this.set(DataComponents.ITEM_NAME, Component.text("鍛冶台クラフト").toMCComponent())
                 }
 
-                return RecipeData(ingredients, typeItem,null, recipe.result.asCraftItemStack().handle, recipe)
+                return RecipeData(ingredients, typeItem,null, recipe.result.toMC(), recipe)
             }
 
             else -> {
@@ -206,13 +207,13 @@ object RecipeUtils {
             }
 
             is RecipeChoice.ExactChoice -> {
-                return choice.choices.filter { it.asCraftItemStack().handle != null }.map {
-                    it.asCraftItemStack().handle
+                return choice.choices.map {
+                    it.toMCCopy()
                 }
             }
 
             is BattleRoyalItemChoice -> {
-                return listOf(choice.item.createItem().asCraftItemStack().handle)
+                return listOf(choice.item.createItem().toMC())
             }
 
             null -> {

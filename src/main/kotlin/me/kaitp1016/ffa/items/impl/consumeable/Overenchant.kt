@@ -6,7 +6,7 @@ import me.kaitp1016.ffa.items.Rarity
 import me.kaitp1016.ffa.items.events.ItemEventHandler
 import me.kaitp1016.ffa.items.events.ItemEvents
 import me.kaitp1016.ffa.plugin
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftItemStack
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.minecraft.world.item.enchantment.Enchantments
@@ -39,7 +39,7 @@ object Overenchant: CustomItem() {
 
     @ItemEventHandler
     fun onSwap(event: ItemEvents.SwapItemInInventoryEvent) {
-        val item = event.bukkitEvent.currentItem?.asCraftItemStack()?.handle ?: return
+        val item = event.bukkitEvent.currentItem?.toMC() ?: return
         val enchantSet = item.enchantments.keySet().firstOrNull() ?: return fail(event,"そのアイテムにはエンチャントがついていません!")
 
         val enchant = enchantSet.value()

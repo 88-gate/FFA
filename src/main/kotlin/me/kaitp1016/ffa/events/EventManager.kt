@@ -9,9 +9,8 @@ import me.kaitp1016.ffa.events.impl.SecoundEvent
 import me.kaitp1016.ffa.events.impl.TickEvent
 import me.kaitp1016.ffa.events.impl.UpdateActionBarEvent
 import me.kaitp1016.ffa.plugin
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftPlayer
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import me.kaitp1016.ffa.utils.NMSUtils.sendPacket
-import net.kyori.adventure.text.Component
 import net.minecraft.network.protocol.Packet
 import net.minecraft.network.protocol.game.ClientboundSetActionBarTextPacket
 import org.bukkit.Bukkit
@@ -44,7 +43,7 @@ object EventManager: Listener {
     fun onJoin(event: PlayerJoinEvent) {
         val player = event.player
 
-        player.asCraftPlayer().handle.connection.connection.channel.pipeline().addBefore("packet_handler","battleroyal_packet_listener_${player.name}", PacketListener(player))
+        player.toMC().connection.connection.channel.pipeline().addBefore("packet_handler","battleroyal_packet_listener_${player.name}", PacketListener(player))
     }
 
     class PacketListener: ChannelDuplexHandler {

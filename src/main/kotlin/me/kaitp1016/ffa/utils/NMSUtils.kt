@@ -3,6 +3,12 @@ package me.kaitp1016.ffa.utils
 import io.papermc.paper.adventure.PaperAdventure
 import net.kyori.adventure.text.Component
 import net.minecraft.network.protocol.Packet
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.server.level.ServerPlayer
+import net.minecraft.world.entity.Entity as MCEntity
+import net.minecraft.world.level.block.state.BlockState as MCBlockState
+import net.minecraft.world.damagesource.DamageSource as MCDamageSource
+import net.minecraft.network.chat.Component as MCComponent
 import org.bukkit.World
 import org.bukkit.block.Block
 import org.bukkit.block.BlockState
@@ -20,44 +26,59 @@ import org.bukkit.inventory.ItemStack
 import net.minecraft.world.item.ItemStack as MCItemStack
 
 object NMSUtils {
-    fun Player.asCraftPlayer(): CraftPlayer {
-        return this as CraftPlayer
+    fun Player.toMC(): ServerPlayer {
+        return (this as CraftPlayer).handle
     }
 
-    fun Entity.asCraftEntity(): CraftEntity {
-        return this as CraftEntity
+    fun Entity.toMC(): MCEntity {
+        return (this as CraftEntity).handle
     }
 
     fun Player.sendPacket(packet: Packet<*>) {
-        this.asCraftPlayer().handle.connection.send(packet)
+        this.toMC().connection.send(packet)
     }
 
-    fun World.asCraftWorld(): CraftWorld {
-        return this as CraftWorld
+    fun World.toMC(): ServerLevel {
+        return (this as CraftWorld).handle
     }
 
-    fun Block.asCraftBlock(): CraftBlock {
+    fun Block.toCraft(): CraftBlock {
         return this as CraftBlock
     }
 
-    fun BlockState.asCraftBlockState(): CraftBlockState {
+    fun Block.toMC(): MCBlockState {
+        return (this as CraftBlock).nms
+    }
+
+    fun BlockState.toCraft(): CraftBlockState {
         return this as CraftBlockState
     }
 
-    fun DamageSource.asCraftDamageSource(): CraftDamageSource {
-        return this as CraftDamageSource
+    fun BlockState.toMC(): MCBlockState {
+        return (this as CraftBlockState).handle
+    }
+
+    fun DamageSource.toMC(): MCDamageSource {
+        return (this as CraftDamageSource).handle
     }
 
     fun ItemStack.asCraftItemStack(): CraftItemStack {
         if (this is CraftItemStack && this.handle != null) {
             return this
-        }
-        else {
+        } else {
             return MCItemStack.fromBukkitCopy(this).bukkitStack as CraftItemStack
         }
     }
 
-    fun Component.toMCComponent(): net.minecraft.network.chat.Component {
+    fun ItemStack.toMC(): MCItemStack {
+        return (this as CraftItemStack).handle
+    }
+
+    fun ItemStack.toMCCopy(): MCItemStack {
+        return CraftItemStack.asNMSCopy(this)
+    }
+
+    fun Component.toMCComponent(): MCComponent {
         return PaperAdventure.asVanilla(this)
     }
 }

@@ -3,8 +3,7 @@ package me.kaitp1016.ffa.items.events
 import com.destroystokyo.paper.event.player.PlayerLaunchProjectileEvent
 import me.kaitp1016.ffa.events.impl.TickEvent
 import me.kaitp1016.ffa.items.ItemManager.isCustomItem
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftDamageSource
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftPlayer
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.entity.Trident
@@ -92,7 +91,7 @@ object ItemEventPoster: Listener {
             }
         }
 
-        val usingItem = player.asCraftPlayer().handle.useItem.bukkitStack
+        val usingItem = player.toMC().useItem.bukkitStack
         if (usingItem.isCustomItem()) {
             val itemEvent = ItemEvents.DamageWhileUsingEvent(usingItem,player,event)
             itemEvent.post()
@@ -105,8 +104,8 @@ object ItemEventPoster: Listener {
 
     @EventHandler
     fun noEntityDeath(event: EntityDeathEvent) {
-        val bukkitSource = event.damageSource.asCraftDamageSource()
-        val source = bukkitSource.handle
+        val bukkitSource = event.damageSource
+        val source = bukkitSource.toMC()
         val player = bukkitSource.causingEntity
         if (player !is Player) return
 

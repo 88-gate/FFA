@@ -6,8 +6,7 @@ import me.kaitp1016.ffa.items.Rarity
 import me.kaitp1016.ffa.items.events.ItemEventHandler
 import me.kaitp1016.ffa.items.events.ItemEvents
 import me.kaitp1016.ffa.plugin
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftItemStack
-import me.kaitp1016.ffa.utils.NMSUtils.asCraftPlayer
+import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import me.kaitp1016.ffa.utils.Scheduler
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.Identifier
@@ -36,7 +35,7 @@ object Berserker: CustomItem() {
     val cooldownLocation: Identifier = Identifier.parse("ffa:berserker_cooldown")
 
     override fun createItem(amount: Int): ItemStack {
-        return super.createItem(amount).asCraftItemStack().handle.apply {
+        return super.createItem(amount).toMC().apply {
             this.set(DataComponents.USE_COOLDOWN, UseCooldown(COOLDOWN, Optional.of(cooldownLocation)))
         }.bukkitStack
     }
@@ -57,8 +56,8 @@ object Berserker: CustomItem() {
 
     @ItemEventHandler
     fun onUse(event: ItemEvents.UseEvent) {
-        val player = event.player.asCraftPlayer().handle
-        val item = event.item.asCraftItemStack().handle
+        val player = event.player.toMC()
+        val item = event.item.toMC()
         if (player.cooldowns.isOnCooldown(item)) return
 
         val bukkitPlayer = event.player
