@@ -1,8 +1,10 @@
 package me.kaitp1016.ffa.park
 
 import io.papermc.paper.event.entity.EntityKnockbackEvent
+import me.kaitp1016.ffa.events.impl.TickEvent
 import me.kaitp1016.ffa.park.gui.ParkMainGui
 import me.kaitp1016.ffa.utils.NMSUtils.toMC
+import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
@@ -11,6 +13,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.EntityDeathEvent
 import org.bukkit.event.player.PlayerInteractEntityEvent
+import org.bukkit.event.player.PlayerRespawnEvent
 
 object ParkListener: Listener {
     @EventHandler
@@ -46,6 +49,21 @@ object ParkListener: Listener {
         if (entity is Player) {
             val park = ParkManager.getPark(entity.uniqueId)
             park.selectedParks.forEach { it.onKnockback(entity, event) }
+        }
+    }
+
+    @EventHandler
+    fun onRespanw(event: PlayerRespawnEvent) {
+        val player = event.player
+        val park = ParkManager.getPark(player.uniqueId)
+        park.selectedParks.forEach { it.onRespawn(player, event) }
+    }
+
+    @EventHandler
+    fun onTick(event: TickEvent) {
+        Bukkit.getOnlinePlayers().forEach { player ->
+            val park = ParkManager.getPark(player.uniqueId)
+            park.selectedParks.forEach { it.onTick(player) }
         }
     }
 

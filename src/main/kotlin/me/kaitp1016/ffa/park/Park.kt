@@ -9,6 +9,7 @@ import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.EntityDeathEvent
+import org.bukkit.event.player.PlayerRespawnEvent
 
 abstract class Park {
     abstract val icon: ItemStack
@@ -34,7 +35,15 @@ abstract class Park {
 
     }
 
-    open fun onKnockback(player: Player,event: EntityKnockbackEvent) {
+    open fun onKnockback(player: Player, event: EntityKnockbackEvent) {
+
+    }
+
+    open fun onRespawn(player: Player, event: PlayerRespawnEvent) {
+
+    }
+
+    open fun onTick(player: Player) {
 
     }
 

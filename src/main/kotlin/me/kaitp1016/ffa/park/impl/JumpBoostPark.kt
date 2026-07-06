@@ -5,17 +5,15 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import org.bukkit.attribute.Attribute
 
-class HealthBoostPark: Park() {
-    override val icon = ItemStack(Items.APPLE)
-    override val name = "Health Boost"
-    override val cost = 5000
+class JumpBoostPark: Park() {
+    override val icon = ItemStack(Items.RABBIT_FOOT)
+    override val name = "Jump Boost"
+    override val cost = 10000
     override val description = listOf(
-        "体力を追加で獲得する。",
+        "ジャンプ力が増える。",
     )
 
     override fun getAttributes(): List<Pair<Attribute, Double>> {
-        return listOf(
-            Attribute.MAX_HEALTH to 8.0,
-        )
+        return listOf(Attribute.JUMP_STRENGTH to 0.2)
     }
 }

@@ -42,7 +42,6 @@ object KillStreak: Listener {
         streak.streak++
 
         if (streak.streak % 25 == 0) {
-            player.isGlowing = true
             streak.bounty += 100
             Bukkit.broadcast(Component.text("§5§l⚔賞金首 §r").append(killer.name().color(NamedTextColor.YELLOW).append(Component.text(" §aは §b§l${streak.streak} Kill Streak §r§aに到達した! §6賞金 §l+100!"))))
 

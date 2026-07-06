@@ -15,6 +15,6 @@ class MoreKnockbackPark: Park() {
     )
 
     override fun onKnockback(player: Player, event: EntityKnockbackEvent) {
-        event.knockback = event.knockback.multiply(1.2)
+        event.knockback = event.knockback.multiply(1.5)
     }
 }

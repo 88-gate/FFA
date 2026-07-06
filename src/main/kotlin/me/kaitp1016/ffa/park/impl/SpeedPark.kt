@@ -15,7 +15,7 @@ class SpeedPark: Park() {
 
     override fun getAttributes(): List<Pair<Attribute, Double>> {
         return listOf(
-            Attribute.MOVEMENT_SPEED to 0.02,
+            Attribute.MOVEMENT_SPEED to 0.0125,
         )
     }
 }

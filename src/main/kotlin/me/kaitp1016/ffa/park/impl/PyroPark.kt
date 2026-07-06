@@ -6,19 +6,23 @@ import net.minecraft.world.item.Items
 import org.bukkit.damage.DamageType
 import org.bukkit.entity.Player
 import org.bukkit.event.entity.EntityDamageByEntityEvent
+import kotlin.math.max
+import kotlin.math.min
+import kotlin.random.Random
 
-class WarriorPark: Park() {
-    override val icon = ItemStack(Items.STONE_SWORD)
-    override val name = "Warrior"
+class PyroPark: Park() {
+    override val icon = ItemStack(Items.BLAZE_POWDER)
+    override val name = "Pyro"
     override val cost = 2500
     override val description = listOf(
-        "与える近接ダメージが1.1倍になる。",
+        "敵に近接ダメージを与えたら確率で燃やす。",
     )
 
     override fun onHit(player: Player, event: EntityDamageByEntityEvent) {
         val source = event.damageSource
-        if (source.damageType == DamageType.PLAYER_ATTACK) {
-            event.damage *= 1.1
+        if (Random.nextInt(0, 3) == 1 && source.damageType == DamageType.PLAYER_ATTACK) {
+            val entity = event.entity
+            entity.fireTicks = max(entity.fireTicks, max(entity.fireTicks + 40, 100))
         }
     }
 }

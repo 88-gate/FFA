@@ -20,7 +20,7 @@ class ExperiencePark: Park() {
         val target = event.entity
         if (target is Player) {
             val level = target.world.toMC()
-            level.addFreshEntity(ExperienceOrb(level,target.x,target.y,target.z,10, null,null,null))
+            level.addFreshEntity(ExperienceOrb(level, target.x, target.y, target.z, 10, null, null, null))
         }
     }
 }

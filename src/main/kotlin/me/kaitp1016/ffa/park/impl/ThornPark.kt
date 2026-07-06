@@ -21,6 +21,6 @@ class ThornPark: Park() {
     override fun onDamage(player: Player, event: EntityDamageEvent) {
         if (Random.nextInt(0, 3) != 1) return
         val damager = event.damageSource.causingEntity as? LivingEntity ?: return
-        damager.damage(2.0, DamageSource.builder(DamageType.THORNS).withDirectEntity(player).build())
+        damager.damage(4.0, DamageSource.builder(DamageType.THORNS).withDirectEntity(player).build())
     }
 }

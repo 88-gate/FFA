@@ -2,6 +2,8 @@ package me.kaitp1016.ffa.game
 
 import me.kaitp1016.ffa.events.impl.TickEvent
 import me.kaitp1016.ffa.events.impl.UpdateActionBarEvent
+import me.kaitp1016.ffa.park.ParkManager
+import me.kaitp1016.ffa.park.Parks
 import me.kaitp1016.ffa.setting.Settings
 import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import org.bukkit.entity.Player
@@ -47,7 +49,7 @@ object CombatTag: Listener {
         val currentTime = System.currentTimeMillis()
 
         combatTagStatus.forEach { (player, time) ->
-            if (time + Settings.COMBAT_TAG_TIME.getValue() < currentTime) {
+            if (time + getCombatTagDuration(player) < currentTime) {
                 toRemove.add(player)
             }
         }
@@ -70,16 +72,22 @@ object CombatTag: Listener {
     fun Player.hasCombatTag(): Boolean {
         val time = combatTagStatus[this] ?: return false
 
-        if (time + Settings.COMBAT_TAG_TIME.getValue() < System.currentTimeMillis()) {
+        if (time + getCombatTagDuration(this) < System.currentTimeMillis()) {
             combatTagStatus.remove(this)
             return false
-        }
-        else return true
+        } else return true
     }
 
     fun Player.getCombatTagTime(): Long {
         val time = combatTagStatus[this] ?: return -1
 
-        return time + Settings.COMBAT_TAG_TIME.getValue() - System.currentTimeMillis()
+        return time + getCombatTagDuration(this) - System.currentTimeMillis()
+    }
+
+    private fun getCombatTagDuration(player: Player): Int {
+        val parks = ParkManager.getPark(player.uniqueId)
+        val reduce = 1 - parks.selectedParks.count { it == Parks.RUNNER } * 0.1
+
+        return (Settings.COMBAT_TAG_TIME.getValue() * reduce).toInt()
     }
 }
