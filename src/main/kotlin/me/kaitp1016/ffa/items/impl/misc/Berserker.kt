@@ -5,6 +5,8 @@ import me.kaitp1016.ffa.items.ItemCategory
 import me.kaitp1016.ffa.items.Rarity
 import me.kaitp1016.ffa.items.events.ItemEventHandler
 import me.kaitp1016.ffa.items.events.ItemEvents
+import me.kaitp1016.ffa.perk.extra.ExtraPerkManager
+import me.kaitp1016.ffa.perk.extra.ExtraPerks
 import me.kaitp1016.ffa.plugin
 import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import me.kaitp1016.ffa.utils.Scheduler
@@ -31,7 +33,7 @@ object Berserker: CustomItem() {
     override val category = ItemCategory.MISC
     override val isUnique = true
 
-    const val COOLDOWN = 120f
+    const val COOLDOWN = 70f
     val cooldownLocation: Identifier = Identifier.parse("ffa:berserker_cooldown")
 
     override fun createItem(amount: Int): ItemStack {
@@ -63,7 +65,13 @@ object Berserker: CustomItem() {
         val bukkitPlayer = event.player
 
         bukkitPlayer.world.playSound(bukkitPlayer.location,Sound.ENTITY_RAVAGER_ROAR,1f,1f)
-        player.cooldowns.addCooldown(cooldownLocation,COOLDOWN.toInt() * 20)
+
+        if (ExtraPerkManager.getPerkData(player.uuid).selectedPerks.contains(ExtraPerks.BLOOD_BERSERKER)) {
+            player.cooldowns.addCooldown(cooldownLocation,COOLDOWN.toInt() * 10)
+        }
+        else {
+            player.cooldowns.addCooldown(cooldownLocation,COOLDOWN.toInt() * 20)
+        }
 
         player.getAttribute(Attributes.KNOCKBACK_RESISTANCE)!!.baseValue = 100.0
         player.getAttribute(Attributes.ATTACK_DAMAGE)!!.baseValue = 3.0

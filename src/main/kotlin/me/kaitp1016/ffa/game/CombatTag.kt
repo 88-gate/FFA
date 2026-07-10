@@ -2,8 +2,8 @@ package me.kaitp1016.ffa.game
 
 import me.kaitp1016.ffa.events.impl.TickEvent
 import me.kaitp1016.ffa.events.impl.UpdateActionBarEvent
-import me.kaitp1016.ffa.park.ParkManager
-import me.kaitp1016.ffa.park.Parks
+import me.kaitp1016.ffa.perk.PerkManager
+import me.kaitp1016.ffa.perk.Perks
 import me.kaitp1016.ffa.setting.Settings
 import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import org.bukkit.entity.Player
@@ -85,8 +85,8 @@ object CombatTag: Listener {
     }
 
     private fun getCombatTagDuration(player: Player): Int {
-        val parks = ParkManager.getPark(player.uniqueId)
-        val reduce = 1 - parks.selectedParks.count { it == Parks.RUNNER } * 0.1
+        val perks = PerkManager.getPerkData(player.uniqueId)
+        val reduce = 1 - perks.selectedPerks.count { it == Perks.RUNNER } * 0.1
 
         return (Settings.COMBAT_TAG_TIME.getValue() * reduce).toInt()
     }

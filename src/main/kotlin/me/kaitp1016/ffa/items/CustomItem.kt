@@ -29,7 +29,7 @@ abstract class CustomItem {
     var internalId = ItemManager.getInternalId()
 
     open fun createItem(amount: Int = 1): ItemStack {
-        return ItemStack(material).apply {
+        return ItemStack.of(material).apply {
             val lore = getLore(this)
             this.lore(lore)
             this.amount = amount

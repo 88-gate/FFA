@@ -5,7 +5,8 @@ import me.kaitp1016.ffa.items.ItemManager
 import me.kaitp1016.ffa.packetgui.impl.ItemListGui
 import me.kaitp1016.ffa.packetgui.impl.TestSignGui
 import me.kaitp1016.ffa.packetgui.impl.setting.SettingGui
-import me.kaitp1016.ffa.park.gui.ParkMainGui
+import me.kaitp1016.ffa.perk.extra.gui.ExtraPerkMainGui
+import me.kaitp1016.ffa.perk.gui.PerkMainGui
 import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import me.kaitp1016.ffa.utils.Utils
 import net.minecraft.core.BlockPos
@@ -45,8 +46,12 @@ object FFACommand : CommandExecutor, TabCompleter {
             TestSignGui(sender.toMC()).open()
         }
 
-        if (args[0] == "park") {
-            ParkMainGui(sender.toMC(),null).open()
+        if (args[0] == "perk") {
+            PerkMainGui(sender.toMC(),null).open()
+        }
+
+        if (args[0] == "extraperk") {
+            ExtraPerkMainGui(sender.toMC(),null).open()
         }
 
         if (args[0] == "minecontainertest") {
@@ -73,7 +78,8 @@ object FFACommand : CommandExecutor, TabCompleter {
             suggestions.add("items")
             suggestions.add("setting")
             suggestions.add("minecontainertest")
-            suggestions.add("park")
+            suggestions.add("perk")
+            suggestions.add("extraperk")
         }
         else if (args.getOrNull(0) == "give" && args.size == 2) {
             suggestions.addAll(ItemManager.itemIdMap.keys)

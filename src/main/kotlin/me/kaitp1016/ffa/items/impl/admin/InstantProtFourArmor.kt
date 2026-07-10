@@ -18,22 +18,22 @@ object InstantProtFourArmor: CustomItem() {
     override val category = ItemCategory.ADMIN
 
     val armors = mapOf(
-        EquipmentSlot.HEAD to ItemStack(Material.DIAMOND_HELMET).apply {
+        EquipmentSlot.HEAD to ItemStack.of(Material.DIAMOND_HELMET).apply {
             this.addUnsafeEnchantment(Enchantment.PROTECTION,1)
             this.addUnsafeEnchantment(Enchantment.UNBREAKING,3)
             this.addUnsafeEnchantment(Enchantment.VANISHING_CURSE,1)
         },
-        EquipmentSlot.CHEST to ItemStack(Material.DIAMOND_CHESTPLATE).apply {
+        EquipmentSlot.CHEST to ItemStack.of(Material.DIAMOND_CHESTPLATE).apply {
             this.addUnsafeEnchantment(Enchantment.PROTECTION,1)
             this.addUnsafeEnchantment(Enchantment.UNBREAKING,3)
             this.addUnsafeEnchantment(Enchantment.VANISHING_CURSE,1)
         },
-        EquipmentSlot.LEGS to ItemStack(Material.DIAMOND_LEGGINGS).apply {
+        EquipmentSlot.LEGS to ItemStack.of(Material.DIAMOND_LEGGINGS).apply {
             this.addUnsafeEnchantment(Enchantment.PROTECTION,1)
             this.addUnsafeEnchantment(Enchantment.UNBREAKING,3)
             this.addUnsafeEnchantment(Enchantment.VANISHING_CURSE,1)
         },
-        EquipmentSlot.FEET to ItemStack(Material.DIAMOND_BOOTS).apply {
+        EquipmentSlot.FEET to ItemStack.of(Material.DIAMOND_BOOTS).apply {
             this.addUnsafeEnchantment(Enchantment.PROTECTION,1)
             this.addUnsafeEnchantment(Enchantment.UNBREAKING,3)
             this.addUnsafeEnchantment(Enchantment.VANISHING_CURSE,1)

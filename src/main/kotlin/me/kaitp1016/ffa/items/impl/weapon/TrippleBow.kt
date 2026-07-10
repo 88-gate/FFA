@@ -5,6 +5,8 @@ import me.kaitp1016.ffa.items.ItemCategory
 import me.kaitp1016.ffa.items.Rarity
 import me.kaitp1016.ffa.items.events.ItemEventHandler
 import me.kaitp1016.ffa.items.events.ItemEvents
+import me.kaitp1016.ffa.perk.PerkManager
+import me.kaitp1016.ffa.perk.Perks
 import me.kaitp1016.ffa.utils.NMSUtils.toMC
 import me.kaitp1016.ffa.utils.Scheduler
 import net.minecraft.server.level.ServerLevel
@@ -40,12 +42,16 @@ object TrippleBow: CustomItem() {
 
         Scheduler.scheduleTask(5) {
             shootArrow(level, player, weapon,power)
-            player.bukkitEntity.world.playSound(player.bukkitEntity.location,Sound.ENTITY_ARROW_SHOOT,2f,1.3f)
         }
 
         Scheduler.scheduleTask(10) {
             shootArrow(level, player, weapon,power)
-            player.bukkitEntity.world.playSound(player.bukkitEntity.location,Sound.ENTITY_ARROW_SHOOT,2f,1.3f)
+        }
+
+        if (PerkManager.getPerkData(player.uuid).selectedPerks.contains(Perks.QUADRUPLE_ARROW)) {
+            Scheduler.scheduleTask(15) {
+                shootArrow(level, player, weapon,power)
+            }
         }
     }
 
@@ -57,6 +63,8 @@ object TrippleBow: CustomItem() {
                 this.pickup = AbstractArrow.Pickup.CREATIVE_ONLY
             }
         }
+
+        shooter.bukkitEntity.world.playSound(shooter.bukkitEntity.location,Sound.ENTITY_ARROW_SHOOT,2f,1.3f)
     }
 
     fun createArrow(level: Level, shooter: LivingEntity, weapon: ItemStack): Arrow {

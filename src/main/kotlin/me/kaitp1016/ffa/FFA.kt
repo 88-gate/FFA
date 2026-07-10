@@ -18,8 +18,11 @@ import me.kaitp1016.ffa.items.ItemManager
 import me.kaitp1016.ffa.items.events.ItemEventPoster
 import me.kaitp1016.ffa.items.impl.consumeable.TemporaryBlocks
 import me.kaitp1016.ffa.packetgui.PacketGuiManager
-import me.kaitp1016.ffa.park.ParkListener
-import me.kaitp1016.ffa.park.ParkManager
+import me.kaitp1016.ffa.perk.PerkListener
+import me.kaitp1016.ffa.perk.PerkManager
+import me.kaitp1016.ffa.perk.extra.ExtraPerkAttributeHandler
+import me.kaitp1016.ffa.perk.extra.ExtraPerkListener
+import me.kaitp1016.ffa.perk.extra.ExtraPerkManager
 import me.kaitp1016.ffa.setting.Settings
 import me.kaitp1016.ffa.utils.DatapackAPI.getMoney
 import me.kaitp1016.ffa.utils.NMSUtils.toMC
@@ -50,8 +53,11 @@ class FFA : JavaPlugin(), Listener {
             MiningActionBarHandler,
             TemporaryBlocks,
             KillStreak,
-            ParkManager,
-            ParkListener,
+            PerkManager,
+            PerkListener,
+            ExtraPerkManager,
+            ExtraPerkListener,
+            ExtraPerkAttributeHandler,
             this,
         ).forEach { server.pluginManager.registerEvents(it,plugin) }
 
